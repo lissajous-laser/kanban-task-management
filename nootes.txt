@@ -1,0 +1,28 @@
+each task:
+- title
+- description
+- subtasks
+- status
+
+
+
+program has list of boards
+board - list of columns
+each column has list of tasks
+
+
+add board => name, columns
+edit board => name, column names, add columns, delete columns
+delete board
+
+add column
+
+add task => title, description, subtasks, status
+edit task => title, description, add subtasks, edit subtasks, delete subtasks
+delete task
+
+
+
+enforce unique board names
+
+
