@@ -1,3 +1,5 @@
+import { store } from "../redux/store";
+
 export type Board = {
   id: number,
   name: string,
@@ -18,13 +20,19 @@ export type Task = {
 }
 
 export type Subtask = {
-  description: string,
-  isDone: boolean,
+  title: string,
+  isCompleted: boolean,
 }
+
+export type State = ReturnType<typeof store.getState>;
 
 export type TaskAction = {
   boardId: number,
   columnId: number,
   columnMoveToId?: number,
   task: Task
+}
+
+export type ChangeBoardAction = {
+  boardId: number,
 }

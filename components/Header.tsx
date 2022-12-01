@@ -1,6 +1,9 @@
+import { current } from '@reduxjs/toolkit';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { jakartaSans } from '../lib/fonts';
+import { State } from '../lib/types';
 import moreIcon from '../public/assets/icon-vertical-ellipsis.svg';
 import style from '../styles/Header.module.css';
 
@@ -42,6 +45,7 @@ const AddTaskBtn = styled.button`
   color: ${(props) => props.theme.colors.buttonPrimaryText};
   font-size: 0.94rem;
   font-weight: 700;
+  padding: 0;
 
   &:hover {
     cursor: pointer;
@@ -51,6 +55,7 @@ const AddTaskBtn = styled.button`
 const MoreBtn = styled.button`
   border: none;
   background-color:  ${(props) => props.theme.colors.main};
+  padding: 0;
 
   &:hover {
     cursor: pointer;
@@ -58,10 +63,13 @@ const MoreBtn = styled.button`
 `
 
 export default function Header() {
+  const currentBoard = useSelector((state: State) => state.currentBoard)
+  const boards = useSelector((state: State) => state.boards)
+
   return (
-    <Container>
-      <BoardHeading className={jakartaSans.className}>
-        Platform Launch
+    <Container className={jakartaSans.className}>
+      <BoardHeading>
+        {boards.filter((board) => board.id === currentBoard)[0].name}
       </BoardHeading>
       <AndTaskAndMoreBtns>
         <AddTaskBtn className={jakartaSans.className}>

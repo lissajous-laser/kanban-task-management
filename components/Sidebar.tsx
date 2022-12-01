@@ -8,7 +8,9 @@ import sun from '../public/assets/icon-light-theme.svg';
 import moon from '../public/assets/icon-dark-theme.svg';
 import hideSidebarIcon from '../public/assets/icon-hide-sidebar.svg';
 import style from '../styles/Sidebar.module.css';
-
+import { useSelector } from "react-redux";
+import { State } from "../lib/types";
+import SidebarBoardBtn from "./SidebarBoardBtn";
 
 const Container = styled.div`
   width: 300px;
@@ -30,7 +32,7 @@ const BoardsListHead = styled.div`
   letter-spacing: 0.15rem;
   font-weight: 700;
   margin-top: 3.38rem;
-
+  margin-left: 2.0rem;
 `
 
 const BoardsPanel = styled.div`
@@ -38,10 +40,10 @@ const BoardsPanel = styled.div`
 `
 
 const ColumnLOffset = styled.div`
-  margin-left: 2.0rem;
+  padding-left: 2.0rem;
 `
 
-const NewBoard = styled.button`
+const NewBoardBtn = styled.button`
   background-color: ${(props) => props.theme.colors.main};
   color: ${(props) => props.theme.colors.accent};
   border: none;
@@ -49,11 +51,23 @@ const NewBoard = styled.button`
   font-weight: 700;
   display: flex;
   align-items: center;
+  height: 3rem;
+  padding: 0;
+  margin-left: 2.0rem;
   
   &:hover {
     cursor: pointer;
   }
 `
+
+const ListOfBoards = styled.ul`
+  padding-inline-start: 0;
+  margin-top: 1.19rem;
+  margin-bottom: 0;
+`
+
+
+
 const ThemePanel = styled.div`
   width: 15.69rem;
   height: 3.0rem;
@@ -75,6 +89,7 @@ const ThemeBtn = styled.button`
   border-radius: 0.63rem;
   display: flex;
   align-items: center;
+  padding: 0;
 
   &:hover {
     cursor: pointer;
@@ -100,6 +115,7 @@ const SidebarVisibleBtn = styled.button`
   margin-left: 1.94rem;
   margin-top: 1.38rem;
   margin-bottom: 2.94rem;
+  padding: 0;
 
   &:hover {
     cursor: pointer;
@@ -115,8 +131,12 @@ const SidebarVisibleBtn = styled.button`
 
 
 export default function Sidebar() {
+  const boards = useSelector((state: State) => state.boards);
+  const currentBoard = useSelector((state: State) => state.currentBoard);
+
+
   return (
-  <Container>
+  <Container className={jakartaSans.className}>
     <Column>
       <div>
         <Image
@@ -125,17 +145,21 @@ export default function Sidebar() {
           alt='logo'
         />
         <BoardsPanel>
-          <ColumnLOffset>
-            <BoardsListHead className={jakartaSans.className}>
-              ALL BOARDS
-            </BoardsListHead>
-            <ul>
-            </ul>
-            <NewBoard className={jakartaSans.className}>
-              <Image className={style.boardIcon} src={boardIcon} alt='Kanban board icon'/>
-              <div>+ Create New Board</div>
-            </NewBoard>
-          </ColumnLOffset>
+          <BoardsListHead>
+            ALL BOARDS
+          </BoardsListHead>
+          <ListOfBoards>
+            {boards.map((board) => <SidebarBoardBtn key={board.id} board={board}/>)}
+          </ListOfBoards>
+          <NewBoardBtn className={jakartaSans.className}>
+            <Image
+              className={style.boardIcon}
+              src={boardIcon}
+              alt='Kanban board icon'
+            />
+            <div>+ Create New Board</div>
+          </NewBoardBtn>
+
         </BoardsPanel>
       </div>
       <div>

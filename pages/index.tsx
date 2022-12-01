@@ -1,9 +1,15 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import { useEffect, useLayoutEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled, {ThemeProvider} from 'styled-components';
 import BoardView from '../components/BoardView';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import { Board, State } from '../lib/types';
+import data from '../public/data.json'
+import { loadBoards } from '../redux/boards';
 import styles from '../styles/Home.module.css';
 import {lightTheme} from '../themes';
 
@@ -21,6 +27,43 @@ const Main = styled.div`
 `
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const boards = useSelector((state: State) => state.boards);
+
+  // useEffect(() => {
+  //   const savedData = localStorage.getItem('boards');
+
+  //   if (savedData) {
+  //     dispatch(loadBoards(JSON.parse(savedData)));
+  //   } else {
+  //     let currentId = 0;
+      
+  //     // Create a Board[] by adding ids to data in .json
+  //     const boards: Board[] = data.boards.map((board) => {
+  //       return {
+  //         id: currentId++,
+  //         name: board.name,
+  //         columns: board.columns.map((column) => ({
+  //           id: currentId++,
+  //           name: column.name,
+  //           tasks: column.tasks.map((task) => ({
+  //             id: currentId++,
+  //             title: task.title,
+  //             description: task.description,
+  //             subtasks: task.subtasks 
+  //           }))
+  //         }))
+  //       }
+  //     });
+  //     console.log(boards);
+  //     dispatch(loadBoards(boards));
+  //   } 
+  // });
+
+  // useLayoutEffect(() => {
+  //   console.log(boards)
+  // })
+
   return (
     <div className={styles.container}>
       <Head>

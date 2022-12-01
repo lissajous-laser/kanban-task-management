@@ -1,5 +1,7 @@
 import {bindActionCreators, createSlice, PayloadAction, Reducer} from '@reduxjs/toolkit';
 import {Board, Column, Task, TaskAction} from '../lib/types';
+import data from '../public/data.json'
+
 
 
 const column1: Column = {
@@ -12,8 +14,8 @@ const column1: Column = {
       description: 'Lorem ipsum dolor sit amet',
       subtasks: [
         {
-          description: 'consectetur adipiscing elit',
-          isDone: false
+          title: 'consectetur adipiscing elit',
+          isCompleted: false
         }
       ],
     }
@@ -30,12 +32,12 @@ const column2: Column =     {
       description: 'Lorem ipsum dolor sit amet',
       subtasks: [
         {
-          description: 'consectetur adipiscing elit',
-          isDone: true,
+          title: 'consectetur adipiscing elit',
+          isCompleted: true,
         },
         {
-          description: 'consectetur adipiscing elit',
-          isDone: false,            
+          title: 'consectetur adipiscing elit',
+          isCompleted: false,            
         }
       ],
     }
@@ -51,10 +53,37 @@ const board1: Board = {
 const initState: Board[] = [board1];
 
 
-export const boardsSlice = createSlice({
+// let currentId = 0;
+
+// const initFile: Board[] = data.boards.map((board) => {
+  
+//   return {
+//     id: currentId++,
+//     name: board.name,
+//     columns: board.columns.map((column) => ({
+//       id: currentId++,
+//       name: column.name,
+//       tasks: column.tasks.map((task) => ({
+//         id: currentId++,
+//         title: task.title,
+//         description: task.description,
+//         subtasks: task.subtasks 
+//       }))
+//     }))
+//   }
+// });
+
+// console.log('initFile');
+// console.log(initFile);
+
+const boardsSlice = createSlice({
   name: 'boards',
   initialState: initState,
   reducers: {
+    loadBoards: (state, action: PayloadAction<Board[]>) => {
+      return action.payload;
+    },
+
     addBoard: (state, action: PayloadAction<Board>) => {
       return [...state, action.payload];
     },
@@ -164,5 +193,9 @@ export const boardsSlice = createSlice({
   }  
 });
 
+export const {
+  loadBoards, addBoard, editBoard, deleteBoard,
+  addTask, editTask, deleteTask
+} = boardsSlice.actions
 
-
+export default boardsSlice.reducer;

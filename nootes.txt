@@ -26,3 +26,15 @@ delete task
 enforce unique board names
 
 
+
+current board
+
+
+
+column colors:
+
+#49C4E5 hsv(192.7, 68.1, 89.8)
+#8471F2 hsv(248.8, 53.5, 94.9)
+#67E2AE hsv(154.6, 54.4, 88.6)
+#e660e6
+#e66077
