@@ -10,7 +10,7 @@ import style from '../styles/Header.module.css';
 // TODO:
 // - heading name uses state of current board
 
-const Container = styled.div`
+const Container = styled.header`
   width: 100%;
   height: 6.06rem;
   background-color: ${(props) => props.theme.colors.main};

@@ -33,6 +33,13 @@ export type TaskAction = {
   task: Task
 }
 
-export type ChangeBoardAction = {
+export type SelectBoardAction = {
   boardId: number,
 }
+
+type Mode = 'add' | 'edit' | 'delete' | 'view' | 'inactive';
+
+export type ShowModalWinAction = {
+  mode: Mode,
+  data: {} | Board | Task
+};

@@ -1,14 +1,14 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {ChangeBoardAction} from "../lib/types";
+import {SelectBoardAction} from "../lib/types";
 
-const initState = 100;
+const initState = 0;
 
 const currentBoardSlice = createSlice({
   name: 'currentBoard',
   initialState: initState,
   reducers: {
-    changeBoard: (state, action: PayloadAction<ChangeBoardAction>) => {
-      return action.payload.boardId;
+    changeBoard: (state, action: PayloadAction<number>) => {
+      return action.payload;
     }
   }
 });

@@ -18,6 +18,16 @@ const Title = styled.h3`
   margin-bottom: 0;
 `
 
+const colorMarkers = ['#49C4E5', '#8471F2', '#67E2AE', '#dc78f0'];
+
+const ColorCircle = styled.div<{idx: number}>`
+  height: 0.94rem;
+  width: 0.94rem;
+  border-radius: 9999rem;
+  background-color: ${(props) =>
+    colorMarkers[props.idx % colorMarkers.length]};
+`
+
 const Header = styled.div`
   display: flex;
   gap: 0.75rem;
@@ -28,6 +38,8 @@ const TaskList = styled.ul`
   flex-direction: column;
   gap: 1.25rem;
   padding-inline-start: 0;
+  margin-top: 1.50rem;
+  list-style-type: none;
 `
 
 export default function BoardColumn({idx}: {idx: number}) {
@@ -37,19 +49,10 @@ export default function BoardColumn({idx}: {idx: number}) {
       .filter((board) => board.id === currentBoard)[0]
       .columns[idx];
 
-  const colorMarkers = ['#49C4E5', '#8471F2', '#67E2AE', '#dc78f0'];
-
-  const ColorCircle = styled.div`
-    height: 0.94rem;
-    width: 0.94rem;
-    border-radius: 9999rem;
-    background-color: ${colorMarkers[idx % colorMarkers.length]};
-  `
-
   return (
     <Container>
       <Header>
-        <ColorCircle/>
+        <ColorCircle idx={idx}/>
         <Title>{column.name.toUpperCase()} ({column.tasks.length})</Title>
       </Header>
       <TaskList>{column.tasks.map((task) => <TaskCard key={task.id} task={task}/>)}</TaskList>

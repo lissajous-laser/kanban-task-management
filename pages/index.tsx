@@ -7,11 +7,13 @@ import styled, {ThemeProvider} from 'styled-components';
 import BoardView from '../components/BoardView';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
-import { Board, State } from '../lib/types';
+import TaskModal from '../components/TaskModal';
+import { Board, State, Task } from '../lib/types';
 import data from '../public/data.json'
-import { loadBoards } from '../redux/boards';
+import {importBoards} from '../redux/boards';
 import styles from '../styles/Home.module.css';
 import {lightTheme} from '../themes';
+
 
 const Container = styled.div`
   display: flex;
@@ -29,40 +31,26 @@ const Main = styled.div`
 export default function Home() {
   const dispatch = useDispatch();
   const boards = useSelector((state: State) => state.boards);
+  const modalWin = useSelector((state: State) => state.modalWin);
+  
+  // Loads saved data if there is any.
+  useEffect(() => {
+    const savedData = localStorage.getItem('boards');
 
-  // useEffect(() => {
-  //   const savedData = localStorage.getItem('boards');
+    if (savedData) {
+      dispatch(importBoards(JSON.parse(savedData)));
+    }
+  });
 
-  //   if (savedData) {
-  //     dispatch(loadBoards(JSON.parse(savedData)));
-  //   } else {
-  //     let currentId = 0;
-      
-  //     // Create a Board[] by adding ids to data in .json
-  //     const boards: Board[] = data.boards.map((board) => {
-  //       return {
-  //         id: currentId++,
-  //         name: board.name,
-  //         columns: board.columns.map((column) => ({
-  //           id: currentId++,
-  //           name: column.name,
-  //           tasks: column.tasks.map((task) => ({
-  //             id: currentId++,
-  //             title: task.title,
-  //             description: task.description,
-  //             subtasks: task.subtasks 
-  //           }))
-  //         }))
-  //       }
-  //     });
-  //     console.log(boards);
-  //     dispatch(loadBoards(boards));
-  //   } 
-  // });
+  const renderTaskModal = () => {
+    let maybeTask = modalWin.data as Task;
 
-  // useLayoutEffect(() => {
-  //   console.log(boards)
-  // })
+    if (maybeTask.subtasks !== undefined && modalWin.mode !== 'inactive') {
+      return (
+        <TaskModal/>
+      );
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -72,6 +60,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ThemeProvider theme={lightTheme}>
+        {renderTaskModal()}
         <Container>
           <Sidebar/>
           <Main>

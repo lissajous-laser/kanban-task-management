@@ -1,6 +1,8 @@
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { jakartaSans } from "../lib/fonts";
 import { Task } from "../lib/types";
+import { viewTask } from "../redux/modalWin";
 
 const Container = styled.li`
   background-color: ${(props) => props.theme.colors.main};
@@ -8,6 +10,7 @@ const Container = styled.li`
   border-radius: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
+  box-shadow: 0 0.3rem 0.6rem rgba(191, 191, 191, 0.3);
 
   &:hover {
     cursor: pointer;
@@ -22,7 +25,7 @@ const Title = styled.h4`
   margin-bottom: 0;
 `
 
-const Progess = styled.p`
+const Progess = styled.h5`
   color: ${(props) => props.theme.colors.textSecondary};
   font-size: 0.75rem;
   font-weight: 700;
@@ -32,12 +35,18 @@ const Progess = styled.p`
 `
 
 export default function TaskCard({task} : {task: Task}) {
+  const dispatch = useDispatch();
+
+  const clickHandler = () => {
+    dispatch(viewTask(task));
+  };
+
   return (
-    <Container >
+    <Container onClick={clickHandler}>
       <Title>{task.title}</Title>
       <Progess>
         {task.subtasks.filter((task) => task.isCompleted).length}
-        &nbsp; of {task.subtasks.length} subtasks
+        &nbsp;of {task.subtasks.length} subtasks
       </Progess>
     </Container>
   );

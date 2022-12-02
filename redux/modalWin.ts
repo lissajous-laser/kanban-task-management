@@ -1,19 +1,11 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { taskCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions';
 import { redirect } from 'next/dist/server/api-utils';
 import { Board, Task } from '../lib/types';
+import { ShowModalWinAction } from '../lib/types';
 
-
-type work = 'add' | 'edit' | 'delete' | 'view' | '';
-
-type WinData = {
-  work: work,
-  data: {} | Board | Task
-};
-
-
-
-const initState: WinData = {
-  work: '',
+const initState: ShowModalWinAction = {
+  mode: 'inactive',
   data: {}
 };
 
@@ -22,37 +14,47 @@ const modalWinSlice = createSlice({
   name: 'modalWin',
   initialState: initState,
   reducers: {
+    // No data required because it is being added to Board[]
     addBoard: (state) => ({
-      work: 'add',
+      mode: 'add',
       data: {}
     }),
-    editBoard: (state, action: PayloadAction<Board>) => ({
-      work: 'edit',
+    editBoard: (state, action: PayloadAction<ShowModalWinAction>) => ({
+      mode: 'edit',
       data: action.payload
     }),
     deleteBoard: (state, action: PayloadAction<Board>) => ({
-      work: 'delete',
+      mode: 'delete',
       data: action.payload
     }),
-    addTask: (state) => ({
-      work: 'add',
-      data: {}
+    // For adding a task, it is being added TO the Board in
+    // the payload.
+    addTask: (state, action: PayloadAction<Board>) => ({
+      mode: 'add',
+      data: action.payload
     }),
     editTask: (state, action: PayloadAction<Task>) => ({
-      work: 'edit',
+      mode: 'edit',
       data: action.payload
     }),
     deleteTask: (state, action: PayloadAction<Task>) => ({
-      work: 'delete',
+      mode: 'delete',
       data: action.payload
     }),
     viewTask: (state, action: PayloadAction<Task>) => ({
-      work: 'view',
+      mode: 'view',
       data: action.payload
     }),
     closeModalWin: (state) => ({
-      work: '',
+      mode: 'inactive',
       data: {}
     })
   }
 });
+
+export const {
+  addBoard, editBoard, deleteBoard, addTask,
+  editTask, deleteTask, viewTask, closeModalWin
+} = modalWinSlice.actions;
+
+export default modalWinSlice.reducer;

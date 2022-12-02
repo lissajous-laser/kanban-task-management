@@ -11,7 +11,7 @@ import BoardColumn from './BoardColumn';
 // - has data about column of current board
 // - has tasks of each item in board
 
-const Container = styled.div`
+const Container = styled.main`
   background-color: ${(props) => props.theme.colors.secondary};
   flex-grow: 1;
   width: 100%;

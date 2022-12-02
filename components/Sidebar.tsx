@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { State } from "../lib/types";
 import SidebarBoardBtn from "./SidebarBoardBtn";
 
-const Container = styled.div`
+const Container = styled.nav`
   width: 300px;
   height: 100%;
   background-color: ${(props) => props.theme.colors.main};
@@ -66,8 +66,6 @@ const ListOfBoards = styled.ul`
   margin-bottom: 0;
 `
 
-
-
 const ThemePanel = styled.div`
   width: 15.69rem;
   height: 3.0rem;
@@ -89,7 +87,7 @@ const ThemeBtn = styled.button`
   border-radius: 0.63rem;
   display: flex;
   align-items: center;
-  padding: 0;
+  padding: 0.19rem;
 
   &:hover {
     cursor: pointer;
@@ -132,8 +130,6 @@ const SidebarVisibleBtn = styled.button`
 
 export default function Sidebar() {
   const boards = useSelector((state: State) => state.boards);
-  const currentBoard = useSelector((state: State) => state.currentBoard);
-
 
   return (
   <Container className={jakartaSans.className}>
