@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
-import Select, { ActionMeta, SingleValue } from 'react-select';
+import Select, { ActionMeta, OnChangeValue, SingleValue } from 'react-select';
 import styled from 'styled-components';
 import {jakartaSans} from '../lib/fonts';
-import {Board, Column, State, Task} from '../lib/types';
+import {Board, Column, State, Task, TaskAction} from '../lib/types';
 import moreIcon from '../public/assets/icon-vertical-ellipsis.svg';
 import {editTask} from '../redux/boards';
 import {closeModalWin} from '../redux/modalWin';
@@ -113,21 +113,23 @@ const DropDown = styled(Select)`
 export default function TaskModal() {
   const dispatch = useDispatch();
   const boards = useSelector((state: State) => state.boards);
-  const currentBoard = useSelector((state: State) => state.currentBoard);
+  const currentBoardId = useSelector((state: State) => state.currentBoardId);
   // Type has been checked by parent component
   const task = useSelector((state: State) => state.modalWin).data as Task;
 
+  // Options for drop-down box.
   const columnOptions: {value: number, label: string}[] = 
     boards
-    .filter((board) => board.id === currentBoard)
+    .filter((board) => board.id === currentBoardId)
     [0]
     .columns
     .map((column) => ({value: column.id, label: column.name}));
 
+  // Default value for drop-down box.
   const dropdownDefaultVal = () => {
     const currentColumn =  
       boards
-      .filter((board) => board.id === currentBoard)
+      .filter((board) => board.id === currentBoardId)
       [0]
       .columns.filter((column) =>
         column
@@ -140,8 +142,14 @@ export default function TaskModal() {
 
   const dropDownChangeHandler = 
     (newValue: SingleValue<{value: number, label: string}>) => {
-      console.log(newValue !== null && newValue);
+      const taskAction: TaskAction = {
+        boardId: currentBoardId,
+        columnMoveToId: newValue?.value,
+        task: task
+      }
+      dispatch(editTask(taskAction));
     };
+
 
   return (
     <Backdrop onClick={() => dispatch(closeModalWin())}>
@@ -162,7 +170,13 @@ export default function TaskModal() {
           &nbsp;of {task.subtasks.length})
           </Subheading>
           <SubtaskList>
-            {task.subtasks.map((subtask) => <SubtaskCard key={subtask.title} subtask={subtask}/>)}
+            {task.subtasks.map((subtask) =>
+              <SubtaskCard
+                key={subtask.title}
+                subtask={subtask}
+                task={task}
+              />
+            )}
           </SubtaskList>
           <Subheading>Current Status</Subheading>
           <DropDown

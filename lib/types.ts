@@ -28,7 +28,6 @@ export type State = ReturnType<typeof store.getState>;
 
 export type TaskAction = {
   boardId: number,
-  columnId: number,
   columnMoveToId?: number,
   task: Task
 }

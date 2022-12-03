@@ -1,8 +1,11 @@
-import { taskCancelled } from "@reduxjs/toolkit/dist/listenerMiddleware/exceptions";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { Subtask } from "../lib/types";
+import { State, Subtask, Task, TaskAction } from "../lib/types";
 import checkIcon from '../public/assets/icon-check.svg';
+import {editTask as editTaskInBoards} from "../redux/boards";
+import {editTask as editTaskInModalWin} from "../redux/modalWin";
 
 const SubtaskContainer = styled.li`
   border-radius: 0.25rem;
@@ -59,10 +62,39 @@ const Title = styled.p<{isCompleted: boolean}>`
   };
 `
 
-export default function SubtaskCard({subtask} : {subtask: Subtask}) {
+export default function SubtaskCard({
+  subtask,
+  task // the Task where subtask is located in 
+} : {
+  subtask: Subtask,
+  task: Task}) {
+  
+  const dispatch = useDispatch();
+  const currendBoardId = useSelector((state: State) => state.currentBoardId);
+
+  const clickHandler = () => {
+    const changedTask = {
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      subtasks: task.subtasks.map((subtask_) => 
+        subtask_.title === subtask.title
+        ? {title: subtask_.title, isCompleted: !subtask_.isCompleted}
+        : subtask_
+      )
+    };
+
+    const taskAction: TaskAction = {
+      boardId: currendBoardId,
+      task: changedTask
+    };
+    dispatch(editTaskInBoards(taskAction));
+    dispatch(editTaskInModalWin(changedTask));
+  }
+
   return (
     <SubtaskContainer>
-      <SubtaskBtn>
+      <SubtaskBtn onClick={clickHandler}>
         <CheckBox isCompleted={subtask.isCompleted}>
           <Image src={checkIcon} alt='Check mark icon'/>
         </CheckBox>

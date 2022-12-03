@@ -22,7 +22,7 @@ const Container = styled.main`
 
 export default function BoardView() {
   const boards = useSelector((state: State) => state.boards);
-  const currentBoard = useSelector((state: State) => state.currentBoard)
+  const currentBoard = useSelector((state: State) => state.currentBoardId)
 
   return (
     <Container className={jakartaSans.className}>

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Board, State } from '../lib/types';
 import boardIcon from '../public/assets/icon-board.svg';
 import boardIconWhite from '../public/assets/icon-board-white.svg';
-import { changeBoard } from '../redux/currentBoard';
+import { changeBoard } from '../redux/currentBoardId';
 import style from '../styles/Sidebar.module.css';
 
 const BoardBtnWrapper = styled.div<{isCurrentBoard: boolean}>`
@@ -53,7 +53,7 @@ const BoardBtn = styled.button<{isCurrentBoard: boolean}>`
 
 
 export default function SidebarBoardBtn({board} : {board: Board}) {
-  const currentBoard = useSelector((state: State) => state.currentBoard);
+  const currentBoard = useSelector((state: State) => state.currentBoardId);
   const dispatch = useDispatch();
 
   const clickHandler = () => {

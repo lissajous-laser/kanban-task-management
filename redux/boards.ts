@@ -54,7 +54,7 @@ const boardsSlice = createSlice({
           id: board.id,
           name: board.name,
           columns: board.columns.map((column) =>
-            column.id === action.payload.columnId
+            column.id === action.payload.columnMoveToId
             ? {
               id: column.id,
               name: column.name,
@@ -74,22 +74,19 @@ const boardsSlice = createSlice({
           ? {
             id: board.id,
             name: board.name,
-            columns: board.columns.map((column) =>
-              column.id === action.payload.columnId
-              ? {
-                id: column.id,
-                name: column.name,
-                tasks: column.tasks.map((task) =>
-                  task.id === action.payload.task.id
-                  ? action.payload.task
-                  : task)
-              }
-              : column
+            columns: board.columns.map((column) => ({
+              id: column.id,
+              name: column.name,
+              tasks: column.tasks.map((task) =>
+                task.id === action.payload.task.id
+                ? action.payload.task
+                : task)
+              })
             )
           }
           : board
         )
-      } else if (action.payload.columnId !== action.payload.columnMoveToId) {
+      } else if (action.payload.columnMoveToId) {
         // If task is changing columns, need to remove from old
         // column and add to new column.
         return state.map((board) =>
@@ -98,7 +95,7 @@ const boardsSlice = createSlice({
             id: board.id,
             name: board.name,
             columns: board.columns.map((column) =>
-              column.id === action.payload.columnId
+              column.id !== action.payload.columnMoveToId
               ? {
                 id: column.id,
                 name: column.name,
@@ -125,18 +122,14 @@ const boardsSlice = createSlice({
           ? {
             id: board.id,
             name: board.name,
-            columns: board.columns.map((column) =>
-              column.id === action.payload.columnId
-              ? {
-                id: column.id,
-                name: column.name,
-                tasks: column.tasks.map((task) =>
-                  task.id === action.payload.task.id
-                  ? action.payload.task
-                  : task)
-              }
-              : column
-            )
+            columns: board.columns.map((column) => ({
+              id: column.id,
+              name: column.name,
+              tasks: column.tasks.map((task) =>
+                task.id === action.payload.task.id
+                ? action.payload.task
+                : task)
+            }))
           }
           : board
         )
@@ -149,16 +142,12 @@ const boardsSlice = createSlice({
         ? {
           id: board.id,
           name: board.name,
-          columns: board.columns.map((column) => 
-            column.id === action.payload.columnId
-            ? {
-              id: column.id,
-              name: column.name,
-              tasks: column.tasks.filter((task) =>
-                task.id !== action.payload.task.id)
-            }
-            : column
-          )
+          columns: board.columns.map((column) => ({
+            id: column.id,
+            name: column.name,
+            tasks: column.tasks.filter((task) =>
+              task.id !== action.payload.task.id)
+          }))
         }
         : board
       )

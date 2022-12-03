@@ -63,7 +63,7 @@ const MoreBtn = styled.button`
 `
 
 export default function Header() {
-  const currentBoard = useSelector((state: State) => state.currentBoard)
+  const currentBoard = useSelector((state: State) => state.currentBoardId)
   const boards = useSelector((state: State) => state.boards)
 
   return (

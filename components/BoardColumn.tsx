@@ -44,7 +44,7 @@ const TaskList = styled.ul`
 
 export default function BoardColumn({idx}: {idx: number}) {
   const boards = useSelector((state: State) => state.boards)
-  const currentBoard = useSelector((state: State) => state.currentBoard);
+  const currentBoard = useSelector((state: State) => state.currentBoardId);
   const column = boards
       .filter((board) => board.id === currentBoard)[0]
       .columns[idx];

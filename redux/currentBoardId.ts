@@ -3,8 +3,8 @@ import {SelectBoardAction} from "../lib/types";
 
 const initState = 0;
 
-const currentBoardSlice = createSlice({
-  name: 'currentBoard',
+const currentBoardIdSlice = createSlice({
+  name: 'currentBoardId',
   initialState: initState,
   reducers: {
     changeBoard: (state, action: PayloadAction<number>) => {
@@ -13,5 +13,5 @@ const currentBoardSlice = createSlice({
   }
 });
 
-export const {changeBoard} = currentBoardSlice.actions;
-export default currentBoardSlice.reducer;
+export const {changeBoard} = currentBoardIdSlice.actions;
+export default currentBoardIdSlice.reducer;
