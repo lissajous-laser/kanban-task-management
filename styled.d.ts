@@ -14,7 +14,7 @@ declare module 'styled-components' {
       textPlaceholder: string,
       accent: string,
       secondaryBtn: string,
-      dangerBtn: string,
+      danger: string,
       outline: string,
       buttonPrimaryText: string,
       controlOutline: string

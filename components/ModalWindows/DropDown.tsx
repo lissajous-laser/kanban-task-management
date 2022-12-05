@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import Select, {SingleValue} from 'react-select';
+import Select, {ActionMeta, SingleValue} from 'react-select';
 import styled from 'styled-components';
 import {jakartaSans} from '../../lib/fonts';
 import { State, Task, TaskAction } from '../../lib/types';

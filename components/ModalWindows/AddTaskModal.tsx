@@ -12,11 +12,13 @@ import ModalWinBackdropAndContainer from "./ModalWinBackdropAndContainer";
 import { Subheading } from "./Subheading";
 import SubtaskInputAndDeleteBtn from "./SubtaskInputAndDeleteBtn";
 import { TextInput } from "./TextInput";
+import { Button } from "./Button";
 
 const Title = styled.h4`
   font-size: 1.13rem;
   color: ${(props) => props.theme.colors.textPrimary};
-
+  margin-top: 0;
+  margin-bottom: 1.5rem;
 `
 
 const TextArea = styled.textarea`
@@ -43,57 +45,17 @@ const SubtasksContainer = styled.div`
   gap: 0.75rem;
 `
 
-const AddSubtaskButton = styled.button`
-  width: 100%;
-  border-radius: 1.25rem;
-  border: none;
-  height: 2.5rem;
-  padding: 0;
+const AddSubtaskButton = styled(Button)`
   background-color: rgba(99, 95, 199, 0.25);
   color: ${(props) => props.theme.colors.accent};
-  font-weight: 700;
-  font-size: 0.81rem;
-  margin-top: 0.75rem;
-
-  &:hover {
-    cursor: pointer;
-  }
 `
 
-const AddTaskButton = styled.button`
-  width: 100%;
-  border-radius: 1.25rem;
-  border: none;
-  height: 2.5rem;
-  padding: 0;
+const AddTaskButton = styled(Button)`
   background-color: ${(props) => props.theme.colors.accent};
   color: ${(props) => props.theme.colors.main};
-  font-weight: 700;
-  font-size: 0.81rem;
-  margin-top: 1.5rem;
-
-  &:hover {
-    cursor: pointer;
-  }
-`
-
-const Menu = styled.ul`
-  height: 5.88rem;
-  width: 12.0rem;
-  background-color: ${(props) => props.theme.colors.main};
-  border-radius: 0.5rem;
-  padding: 1rem;
-  display: flex;
-  gap: 1rem;
-`
-
-const MenuOption = styled.li`
-  height: 1.44rem;
-  width: 100%
 `
 
 export default function AddTaskModal() {
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
   const dispatch = useDispatch();
   const task = useSelector((state: State) => state.modalWin).data as Task;
   const boards = useSelector((state: State) => state.boards);

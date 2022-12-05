@@ -1,4 +1,4 @@
-import {DefaultTheme, Theme} from "styled-components";
+import {Theme} from "styled-components";
 
 export const lightTheme: Theme = {
   colors: {
@@ -10,7 +10,7 @@ export const lightTheme: Theme = {
     textPlaceholder: 'rgba(0, 1, 18, 0.25)',
     accent: 'rgb(99, 95, 199)',
     secondaryBtn: 'rgba(99, 95, 199)',
-    dangerBtn: 'rgb(234, 85, 85)',
+    danger: 'rgb(234, 85, 85)',
     outline: 'rgb(228, 235, 250)',
     buttonPrimaryText: 'rgb(255, 255, 255)',
     controlOutline: 'rgba(130, 143, 163, 0.25)',
@@ -27,7 +27,7 @@ export const darkTheme: Theme = {
     textPlaceholder: 'rgba(0, 1, 18, 0.25)',
     accent: 'rgb(99, 95, 199)',
     secondaryBtn: 'rgb(255, 255, 255)',
-    dangerBtn: 'rgb(234, 85, 85)',
+    danger: 'rgb(234, 85, 85)',
     outline: 'rgb(62, 63, 78)',
     buttonPrimaryText: 'rgb(255, 255, 255)',
     controlOutline: 'rgba(130, 143, 163, 0.25)',

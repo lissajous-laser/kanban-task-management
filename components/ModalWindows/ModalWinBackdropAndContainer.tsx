@@ -1,7 +1,8 @@
 import {useDispatch} from 'react-redux';
 import {closeModalWin} from '../../redux/modalWin';
 import styled from 'styled-components';
-import { ReactNode } from 'react';
+import React, {Dispatch, ReactNode, SetStateAction} from 'react';
+import { jakartaSans } from '../../lib/fonts';
 
 
 const Backdrop = styled.div`
@@ -28,17 +29,26 @@ const Content = styled.section`
 
 
 export default function ModalWinBackdropAndContainer({
-  children
+  children,
+  containerClickHandler // Closes menu
 } : {
-  children: ReactNode[]
+  children: ReactNode,
+  containerClickHandler?: Dispatch<SetStateAction<boolean>>
 }) {
-  
   const dispatch = useDispatch();
+
+  const onClickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (containerClickHandler) {
+      containerClickHandler(false);
+    }
+    e.stopPropagation();
+  }
+
 
   return(
     <Backdrop onClick={() => dispatch(closeModalWin())}>
-      <Container onClick={(e) => {e.stopPropagation()}}>
-        <Content>
+      <Container onClick={onClickHandler}>
+        <Content className={jakartaSans.className}>
           {children}
         </Content>
       </Container>

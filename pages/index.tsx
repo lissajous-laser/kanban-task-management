@@ -14,6 +14,7 @@ import data from '../public/data.json'
 import {importBoards} from '../redux/boards';
 import styles from '../styles/Home.module.css';
 import {lightTheme} from '../themes';
+import DeleteTaskModal from '../components/ModalWindows/DeleteTaskModal';
 
 
 const Container = styled.div`
@@ -52,6 +53,8 @@ export default function Home() {
           return <ViewTaskModal/>;
         case 'add':
           return <AddTaskModal/>;
+        case 'delete':
+          return <DeleteTaskModal/>
       }
     }
   }
