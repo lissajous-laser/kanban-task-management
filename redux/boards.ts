@@ -17,7 +17,11 @@ const initFile: Board[] = data.boards.map((board) => {
         id: currentId++,
         title: task.title,
         description: task.description,
-        subtasks: task.subtasks 
+        subtasks: task.subtasks.map((subtask) => ({
+          id: currentId++,
+          title: subtask.title,
+          isCompleted: subtask.isCompleted
+        })) 
       }))
     }))
   }
@@ -54,7 +58,7 @@ const boardsSlice = createSlice({
           id: board.id,
           name: board.name,
           columns: board.columns.map((column) =>
-            column.id === action.payload.columnMoveToId
+            column.id === action.payload.columnIdToAddOrMove
             ? {
               id: column.id,
               name: column.name,
@@ -68,7 +72,7 @@ const boardsSlice = createSlice({
     },
 
     editTask: (state, action : PayloadAction<TaskAction>) => {
-      if (action.payload.columnMoveToId === undefined) {
+      if (action.payload.columnIdToAddOrMove === undefined) {
         return state.map((board) =>
           board.id === action.payload.boardId
           ? {
@@ -86,7 +90,7 @@ const boardsSlice = createSlice({
           }
           : board
         )
-      } else if (action.payload.columnMoveToId) {
+      } else if (action.payload.columnIdToAddOrMove) {
         // If task is changing columns, need to remove from old
         // column and add to new column.
         return state.map((board) =>
@@ -95,14 +99,14 @@ const boardsSlice = createSlice({
             id: board.id,
             name: board.name,
             columns: board.columns.map((column) =>
-              column.id !== action.payload.columnMoveToId
+              column.id !== action.payload.columnIdToAddOrMove
               ? {
                 id: column.id,
                 name: column.name,
                 tasks: column.tasks.filter((task) =>
                   task.id !== action.payload.task.id)
               }
-              : column.id === action.payload.columnMoveToId
+              : column.id === action.payload.columnIdToAddOrMove
               ? {
                 id: column.id,
                 name: column.name,

@@ -2,10 +2,10 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { State, Subtask, Task, TaskAction } from "../lib/types";
-import checkIcon from '../public/assets/icon-check.svg';
-import {editTask as editTaskInBoards} from "../redux/boards";
-import {editTask as editTaskInModalWin} from "../redux/modalWin";
+import { State, Subtask, Task, TaskAction } from "../../lib/types";
+import checkIcon from '../../public/assets/icon-check.svg';
+import {editTask} from "../../redux/boards";
+import {viewTask} from "../../redux/modalWin";
 
 const SubtaskContainer = styled.li`
   border-radius: 0.25rem;
@@ -24,6 +24,7 @@ const SubtaskBtn = styled.button`
   display: flex;
   align-items: center;
   height: 2rem;
+  width: 100%;
   gap: 1rem;
 
   &:hover {
@@ -79,7 +80,7 @@ export default function SubtaskCard({
       description: task.description,
       subtasks: task.subtasks.map((subtask_) => 
         subtask_.title === subtask.title
-        ? {title: subtask_.title, isCompleted: !subtask_.isCompleted}
+        ? {...subtask_, isCompleted: !subtask_.isCompleted}
         : subtask_
       )
     };
@@ -88,8 +89,8 @@ export default function SubtaskCard({
       boardId: currendBoardId,
       task: changedTask
     };
-    dispatch(editTaskInBoards(taskAction));
-    dispatch(editTaskInModalWin(changedTask));
+    dispatch(editTask(taskAction));
+    dispatch(viewTask(changedTask));
   }
 
   return (
@@ -104,4 +105,4 @@ export default function SubtaskCard({
       </SubtaskBtn>
     </SubtaskContainer>
   );
-}
+};

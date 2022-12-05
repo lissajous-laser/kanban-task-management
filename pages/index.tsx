@@ -4,10 +4,11 @@ import { useEffect, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import styled, {ThemeProvider} from 'styled-components';
+import AddTaskModal from '../components/ModalWindows/AddTaskModal';
 import BoardView from '../components/BoardView';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
-import TaskModal from '../components/TaskModal';
+import ViewTaskModal from '../components/ModalWindows/ViewTaskModal';
 import { Board, State, Task } from '../lib/types';
 import data from '../public/data.json'
 import {importBoards} from '../redux/boards';
@@ -18,7 +19,7 @@ import {lightTheme} from '../themes';
 const Container = styled.div`
   display: flex;
   width: 100wv;
-  height: 100vh;
+  height: max(100vh);
 `;
 
 const Main = styled.div`
@@ -46,9 +47,12 @@ export default function Home() {
     let maybeTask = modalWin.data as Task;
 
     if (maybeTask.subtasks !== undefined && modalWin.mode !== 'inactive') {
-      return (
-        <TaskModal/>
-      );
+      switch (modalWin.mode) {
+        case 'view':
+          return <ViewTaskModal/>;
+        case 'add':
+          return <AddTaskModal/>;
+      }
     }
   }
 

@@ -11,11 +11,13 @@ declare module 'styled-components' {
       tertiary: string,
       textPrimary: string,
       textSecondary: string,
+      textPlaceholder: string,
       accent: string,
       secondaryBtn: string,
       dangerBtn: string,
       outline: string,
       buttonPrimaryText: string,
+      controlOutline: string
     }
   }
 }

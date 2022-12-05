@@ -29,7 +29,7 @@ const modalWinSlice = createSlice({
     }),
     // For adding a task, it is being added TO the Board in
     // the payload.
-    addTask: (state, action: PayloadAction<Board>) => ({
+    addTask: (state, action: PayloadAction<Task>) => ({
       mode: 'add',
       data: action.payload
     }),

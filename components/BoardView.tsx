@@ -16,7 +16,7 @@ const Container = styled.main`
   flex-grow: 1;
   width: 100%;
   display: flex;
-  gap: 1.5rem;
+  overflow: scroll;
 `
 
 

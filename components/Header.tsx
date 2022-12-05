@@ -1,10 +1,11 @@
 import { current } from '@reduxjs/toolkit';
 import Image from 'next/image';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
-import { jakartaSans } from '../lib/fonts';
-import { State } from '../lib/types';
+import {jakartaSans} from '../lib/fonts';
+import {State} from '../lib/types';
 import moreIcon from '../public/assets/icon-vertical-ellipsis.svg';
+import {addTask} from '../redux/modalWin';
 import style from '../styles/Header.module.css';
 
 // TODO:
@@ -27,7 +28,7 @@ const BoardHeading = styled.h2`
   margin-top: 1.81rem;
 `
 
-const AndTaskAndMoreBtns = styled.div`
+const AddTaskAndMoreBtns = styled.div`
   margin-top: 1.25rem;
   margin-bottom: 1.75rem;
   display: flex;
@@ -63,22 +64,39 @@ const MoreBtn = styled.button`
 `
 
 export default function Header() {
-  const currentBoard = useSelector((state: State) => state.currentBoardId)
-  const boards = useSelector((state: State) => state.boards)
+  const dispatch = useDispatch();
+  const currentBoard = useSelector((state: State) => state.currentBoardId);
+  const boards = useSelector((state: State) => state.boards);
+
+  const addTaskHandler = () => {
+    dispatch(addTask({
+      id: Date.now(),
+      title: '',
+      description: '',
+      subtasks: [{id: Date.now(),title: '', isCompleted: false}]
+    }))
+  };
 
   return (
     <Container className={jakartaSans.className}>
       <BoardHeading>
         {boards.filter((board) => board.id === currentBoard)[0].name}
       </BoardHeading>
-      <AndTaskAndMoreBtns>
-        <AddTaskBtn className={jakartaSans.className}>
+      <AddTaskAndMoreBtns>
+        <AddTaskBtn
+          className={jakartaSans.className}
+          onClick={addTaskHandler}          
+        >
           + Add New Task
         </AddTaskBtn>
         <MoreBtn>
-          <Image className={style.moreIcon} src={moreIcon} alt='Vertical ellipsis icon'/>
+          <Image
+            className={style.moreIcon}
+            src={moreIcon}
+            alt='Vertical ellipsis icon'
+          />
         </MoreBtn>
-      </AndTaskAndMoreBtns>
+      </AddTaskAndMoreBtns>
     </Container>
   );
 }

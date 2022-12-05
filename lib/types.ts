@@ -20,6 +20,7 @@ export type Task = {
 }
 
 export type Subtask = {
+  id: number,
   title: string,
   isCompleted: boolean,
 }
@@ -28,7 +29,7 @@ export type State = ReturnType<typeof store.getState>;
 
 export type TaskAction = {
   boardId: number,
-  columnMoveToId?: number,
+  columnIdToAddOrMove?: number,
   task: Task
 }
 
