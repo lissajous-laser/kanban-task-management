@@ -1,10 +1,12 @@
 import Image from "next/image";
+import { ChangeEvent } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { jakartaSans } from "../../lib/fonts";
-import { Subtask, Task } from "../../lib/types";
+import { Mode, State, Subtask, Task } from "../../lib/types";
 import closeIcon from '../../public/assets/icon-cross.svg';
-import { addTask } from "../../redux/modalWin";
+import { addTask, editTask } from "../../redux/modalWin";
 import { TextInput } from "./TextInput";
 
 const TextInputAndCloseBtn = styled.div`
@@ -38,6 +40,24 @@ export default function SubtaskInputAndDeleteBtn({
   subtask: Subtask
 }) {
   const dispatch = useDispatch();
+  const modalWinAction = useSelector((state: State) => state.modalWin);
+
+  const textInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const changedTask = {
+      ...task,
+      subtasks: task.subtasks.map((subtask_) => 
+        subtask_.id === subtask.id
+        ? {
+          id: subtask.id,
+          title: event.target.value,
+          isCompleted: subtask.isCompleted
+        }
+        : subtask_
+      )
+    }
+
+    dispatchGivenMode(changedTask);
+  }
 
   const deleteSubtaskHandler = () => {
     const changedTask = {
@@ -47,7 +67,16 @@ export default function SubtaskInputAndDeleteBtn({
       )
     };
 
-    dispatch(addTask(changedTask));
+    dispatchGivenMode(changedTask);
+  }
+
+  const dispatchGivenMode = (changedTask: Task) => {
+    switch (modalWinAction.mode) {
+      case 'add':
+        dispatch(addTask(changedTask));
+      case 'edit':
+        dispatch(editTask(changedTask));
+    }
   }
 
   return (
@@ -56,6 +85,8 @@ export default function SubtaskInputAndDeleteBtn({
       <TextInput
         className={jakartaSans.className}
         placeholder='e.g. Make coffee'
+        value={subtask.title}
+        onChange={textInputHandler}
       />
       </SubtaskInputWrapper>
       <DeleteSubtaskBtn onClick={deleteSubtaskHandler}>

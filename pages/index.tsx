@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import styled, {ThemeProvider} from 'styled-components';
-import AddTaskModal from '../components/ModalWindows/AddTaskModal';
+import AddOrEditTaskModal from '../components/ModalWindows/AddOrEditTaskModal';
 import BoardView from '../components/BoardView';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
@@ -52,9 +52,11 @@ export default function Home() {
         case 'view':
           return <ViewTaskModal/>;
         case 'add':
-          return <AddTaskModal/>;
+          return <AddOrEditTaskModal/>;
         case 'delete':
-          return <DeleteTaskModal/>
+          return <DeleteTaskModal/>;
+        case 'edit':
+          return <AddOrEditTaskModal/>;
       }
     }
   }

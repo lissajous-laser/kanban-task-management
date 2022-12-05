@@ -84,7 +84,7 @@ export default function DropDown({
       if (!setDropDownSelected && currentColumn !== undefined) {
         const taskAction: TaskAction = {
           boardId: currentBoardId,
-          columnIdToAddOrMove: newValue?.value,
+          columnSelected: newValue?.value,
           task: task
         };
         dispatch(editTask(taskAction));

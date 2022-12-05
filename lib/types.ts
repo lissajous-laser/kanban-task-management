@@ -29,7 +29,7 @@ export type State = ReturnType<typeof store.getState>;
 
 export type TaskAction = {
   boardId: number,
-  columnIdToAddOrMove?: number,
+  columnSelected?: number,
   task: Task
 }
 
@@ -37,7 +37,7 @@ export type SelectBoardAction = {
   boardId: number,
 }
 
-type Mode = 'add' | 'edit' | 'delete' | 'view' | 'inactive';
+export type Mode = 'add' | 'edit' | 'delete' | 'view' | 'inactive';
 
 export type ShowModalWinAction = {
   mode: Mode,

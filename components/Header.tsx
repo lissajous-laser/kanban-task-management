@@ -1,4 +1,3 @@
-import { current } from '@reduxjs/toolkit';
 import Image from 'next/image';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
@@ -7,9 +6,7 @@ import {State} from '../lib/types';
 import moreIcon from '../public/assets/icon-vertical-ellipsis.svg';
 import {addTask} from '../redux/modalWin';
 import style from '../styles/Header.module.css';
-
-// TODO:
-// - heading name uses state of current board
+import { MoreButton } from './MoreButton';
 
 const Container = styled.header`
   width: 100%;
@@ -33,7 +30,9 @@ const AddTaskAndMoreBtns = styled.div`
   margin-bottom: 1.75rem;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: space-between;
+  width: 12.04rem;
+  /* gap: 1.5rem; */
   margin-right: 2.02rem;
 `
 
@@ -55,8 +54,11 @@ const AddTaskBtn = styled.button`
 
 const MoreBtn = styled.button`
   border: none;
-  background-color:  ${(props) => props.theme.colors.main};
   padding: 0;
+  background-color:  ${(props) => props.theme.colors.main};
+  width: 1rem;
+  display: grid;
+  place-items: center;
 
   &:hover {
     cursor: pointer;
@@ -89,13 +91,13 @@ export default function Header() {
         >
           + Add New Task
         </AddTaskBtn>
-        <MoreBtn>
+        <MoreButton>
           <Image
             className={style.moreIcon}
             src={moreIcon}
             alt='Vertical ellipsis icon'
           />
-        </MoreBtn>
+        </MoreButton>
       </AddTaskAndMoreBtns>
     </Container>
   );

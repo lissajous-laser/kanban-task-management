@@ -1,16 +1,16 @@
 import Image from 'next/image';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import { useState } from 'react';
 import styled from 'styled-components';
 import {jakartaSans} from '../../lib/fonts';
 import {State, Task, TaskAction} from '../../lib/types';
 import moreIcon from '../../public/assets/icon-vertical-ellipsis.svg';
-import ModalWinBackdropAndContainer from './ModalWinBackdropAndContainer';
+import { deleteTask, editTask } from '../../redux/modalWin';
+import { MoreButton } from '../MoreButton';
 import SubtaskCard from './SubtaskCard';
 import { Subheading } from './Subheading';
 import DropDown from './DropDown';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteTask } from '../../redux/modalWin';
+import ModalWinBackdropAndContainer from './ModalWinBackdropAndContainer';
 import { Title } from './Title';
 import { Text } from './Text';
 
@@ -21,18 +21,8 @@ const TitleAndMoreBtn = styled.div`
   align-items: center;
 `
 
-const MoreBtn = styled.button`
-  border: none;
-  padding: 0;
-  background-color:  ${(props) => props.theme.colors.main};
+const MoreBtnRelative = styled(MoreButton)`
   position: relative;
-  width: 0.75rem;
-  display: flex;
-  justify-content: right;
-
-  &:hover {
-    cursor: pointer;
-  }
 `
 
 const SubtaskList = styled.ul`
@@ -101,6 +91,10 @@ export default function ViewTaskModal() {
     e.stopPropagation();
   }
 
+  const editTaskClickHandler = () => {
+    dispatch(editTask(task));
+  }
+
   const deleteTaskClickHandler = () => {
     dispatch(deleteTask(task));
   }
@@ -109,15 +103,15 @@ export default function ViewTaskModal() {
     <ModalWinBackdropAndContainer containerClickHandler={setMenuIsOpen}>
       <TitleAndMoreBtn>
         <Title>{task.title}</Title>
-        <MoreBtn onClick={moreBtnClickHandler}>
+        <MoreBtnRelative onClick={moreBtnClickHandler}>
           <Image src={moreIcon} alt='Vertical ellipsis icon'/>
         {menuIsOpen &&
           <Menu className={jakartaSans.className}>
-            <EditTaskOption>Edit Task</EditTaskOption>
+            <EditTaskOption onClick={editTaskClickHandler}>Edit Task</EditTaskOption>
             <DeleteTaskOption onClick={deleteTaskClickHandler}>Delete Task</DeleteTaskOption>
           </Menu>
         }
-        </MoreBtn>
+        </MoreBtnRelative>
 
       </TitleAndMoreBtn>
       <Text>

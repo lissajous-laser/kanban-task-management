@@ -5,8 +5,8 @@ import {useDispatch} from "react-redux";
 import styled from "styled-components";
 import { jakartaSans } from "../../lib/fonts";
 import {State, Task, TaskAction} from "../../lib/types";
-import {addTask as addTaskToBoards} from "../../redux/boards";
-import {addTask, closeModalWin} from "../../redux/modalWin";
+import {addTask as addTaskToBoards, editTask as editTaskToBoards} from "../../redux/boards";
+import {addTask, closeModalWin, editTask} from "../../redux/modalWin";
 import DropDown from "./DropDown";
 import ModalWinBackdropAndContainer from "./ModalWinBackdropAndContainer";
 import { Subheading } from "./Subheading";
@@ -50,14 +50,16 @@ const AddSubtaskButton = styled(Button)`
   color: ${(props) => props.theme.colors.accent};
 `
 
-const AddTaskButton = styled(Button)`
+const SubmitButton = styled(Button)`
   background-color: ${(props) => props.theme.colors.accent};
   color: ${(props) => props.theme.colors.main};
 `
 
-export default function AddTaskModal() {
+export default function AddOrEditTaskModal() {
   const dispatch = useDispatch();
-  const task = useSelector((state: State) => state.modalWin).data as Task;
+  const modalWinAction = useSelector((state: State) => state.modalWin);
+  const task = modalWinAction.data as Task;
+  const mode = modalWinAction.mode;
   const boards = useSelector((state: State) => state.boards);
   const currentBoardId = useSelector((state: State) => state.currentBoardId);
   const columns =  boards.filter(
@@ -84,7 +86,7 @@ export default function AddTaskModal() {
       title: event.target.value
     };
 
-    dispatch(addTask(changedTask));
+    dispatchGivenMode(changedTask);
   }
 
   const descInputHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -93,7 +95,7 @@ export default function AddTaskModal() {
       description: event.target.value
     };
     
-    dispatch(addTask(changedTask));
+    dispatchGivenMode(changedTask);
   }
 
   const addSubTaskHandler = () => {
@@ -105,31 +107,47 @@ export default function AddTaskModal() {
       ]
     };
 
-    dispatch(addTask(changedTask));
+    dispatchGivenMode(changedTask);
   }
 
-  const addTaskHandler = () => {
+  const dispatchGivenMode = (changedTask: Task) => {
+    switch (modalWinAction.mode) {
+      case 'add':
+        dispatch(addTask(changedTask));
+      case 'edit':
+        dispatch(editTask(changedTask));
+    }
+  }
 
+  const submitHandler = () => {
 
     const taskAction: TaskAction = {
       boardId: currentBoardId,
-      columnIdToAddOrMove: dropDownSelected.value,
+      columnSelected: dropDownSelected.value, ///// FIX this
       task: {
         ...task,
         subtasks: task.subtasks.filter((subtask) => subtask.title !== '')
       }
     }
 
-    dispatch(addTaskToBoards(taskAction));
+    switch (modalWinAction.mode) {
+      case 'add':
+        dispatch(addTaskToBoards(taskAction));
+      case 'edit':
+        dispatch(editTaskToBoards(taskAction));
+    }
     dispatch(closeModalWin());
   }
 
   return (
     <ModalWinBackdropAndContainer>
-      <Title>Add New Task</Title>
+      <Title>{mode === 'add' ? 'Add New' : 'Edit'} Task</Title>
+      <Subheading>Title</Subheading>
       <TextInput
         className={jakartaSans.className}
         onChange={titleInputHandler}
+        placeholder='e.g. Take coffee break'
+        value={task.title}
       />
       <Subheading>Description</Subheading>
       <TextArea
@@ -137,6 +155,7 @@ export default function AddTaskModal() {
         className={jakartaSans.className}
         placeholder='e.g. It’s always good to take a break. This 15 minute break will 
         recharge the batteries a little.'
+        value={task.description}
       />
       <Subheading>Subtasks</Subheading>
       <SubtasksContainer>
@@ -159,7 +178,9 @@ export default function AddTaskModal() {
         dropDownSelected={dropDownSelected}
         setDropDownSelected={setDropDownSelected}
       />
-      <AddTaskButton onClick={addTaskHandler}>Create Task</AddTaskButton>
+      <SubmitButton onClick={submitHandler}>
+        {mode === 'add' ? 'Create Task' : 'Save Changes'}
+      </SubmitButton>
     </ModalWinBackdropAndContainer>
   );
 }

@@ -58,7 +58,7 @@ const boardsSlice = createSlice({
           id: board.id,
           name: board.name,
           columns: board.columns.map((column) =>
-            column.id === action.payload.columnIdToAddOrMove
+            column.id === action.payload.columnSelected
             ? {
               id: column.id,
               name: column.name,
@@ -72,72 +72,34 @@ const boardsSlice = createSlice({
     },
 
     editTask: (state, action : PayloadAction<TaskAction>) => {
-      if (action.payload.columnIdToAddOrMove === undefined) {
-        return state.map((board) =>
-          board.id === action.payload.boardId
-          ? {
-            id: board.id,
-            name: board.name,
-            columns: board.columns.map((column) => ({
-              id: column.id,
-              name: column.name,
-              tasks: column.tasks.map((task) =>
-                task.id === action.payload.task.id
-                ? action.payload.task
-                : task)
-              })
-            )
-          }
-          : board
-        )
-      } else if (action.payload.columnIdToAddOrMove) {
-        // If task is changing columns, need to remove from old
-        // column and add to new column.
         return state.map((board) =>
           board.id === action.payload.boardId
           ? {
             id: board.id,
             name: board.name,
             columns: board.columns.map((column) =>
-              column.id !== action.payload.columnIdToAddOrMove
+              column.id !== action.payload.columnSelected
               ? {
                 id: column.id,
                 name: column.name,
                 tasks: column.tasks.filter((task) =>
                   task.id !== action.payload.task.id)
               }
-              : column.id === action.payload.columnIdToAddOrMove
+              : column.id === action.payload.columnSelected
               ? {
                 id: column.id,
                 name: column.name,
-                tasks: [...column.tasks, action.payload.task]
+                tasks: [
+                  ...column.tasks.filter((task) =>
+                    task.id !== action.payload.task.id),
+                  action.payload.task
+                ]
               }
               : column
             )
           }
           : board
         )
-      } else {
-        // If task is not changing columns, want it to keep
-        // same index in column list (not get removed and
-        // added to end).
-        return state.map((board) =>
-          board.id === action.payload.boardId
-          ? {
-            id: board.id,
-            name: board.name,
-            columns: board.columns.map((column) => ({
-              id: column.id,
-              name: column.name,
-              tasks: column.tasks.map((task) =>
-                task.id === action.payload.task.id
-                ? action.payload.task
-                : task)
-            }))
-          }
-          : board
-        )
-      }
     },
 
     deleteTask: (state, action: PayloadAction<TaskAction>) => {
