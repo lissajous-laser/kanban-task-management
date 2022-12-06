@@ -15,6 +15,9 @@ import {importBoards} from '../redux/boards';
 import styles from '../styles/Home.module.css';
 import {lightTheme} from '../themes';
 import DeleteTaskModal from '../components/ModalWindows/DeleteTaskModal';
+import AddOrEditBoardModal from '../components/ModalWindows/AddOrEditBoardModal';
+import ModalWinSwitch from '../components/ModalWindows/ModalWinSwitch';
+import { closeMenu } from '../redux/dropDownMenu';
 
 
 const Container = styled.div`
@@ -44,21 +47,8 @@ export default function Home() {
     }
   });
 
-  const renderTaskModal = () => {
-    let maybeTask = modalWin.data as Task;
-
-    if (maybeTask.subtasks !== undefined && modalWin.mode !== 'inactive') {
-      switch (modalWin.mode) {
-        case 'view':
-          return <ViewTaskModal/>;
-        case 'add':
-          return <AddOrEditTaskModal/>;
-        case 'delete':
-          return <DeleteTaskModal/>;
-        case 'edit':
-          return <AddOrEditTaskModal/>;
-      }
-    }
+  const containerClickHandler = () => {
+    dispatch(closeMenu());
   }
 
   return (
@@ -69,8 +59,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ThemeProvider theme={lightTheme}>
-        {renderTaskModal()}
-        <Container>
+        <ModalWinSwitch/>
+        <Container onClick={containerClickHandler}>
           <Sidebar/>
           <Main>
             <Header/>

@@ -4,7 +4,7 @@ export const lightTheme: Theme = {
   colors: {
     main: 'rgb(255, 255, 255)',
     secondary: 'rgb(244, 247, 253)',
-    tertiary: 'E9EFFA',
+    tertiary: 'rgba(233, 239, 250, 0.5)',
     textPrimary: 'rgb(0, 1, 18)',
     textSecondary: 'rgb(130, 143, 163)',
     textPlaceholder: 'rgba(0, 1, 18, 0.25)',

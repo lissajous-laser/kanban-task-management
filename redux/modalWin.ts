@@ -15,11 +15,11 @@ const modalWinSlice = createSlice({
   initialState: initState,
   reducers: {
     // No data required because it is being added to Board[]
-    addBoard: (state) => ({
+    addBoard: (state, action) => ({
       mode: 'add',
       data: {}
     }),
-    editBoard: (state, action: PayloadAction<ShowModalWinAction>) => ({
+    editBoard: (state, action: PayloadAction<Board>) => ({
       mode: 'edit',
       data: action.payload
     }),

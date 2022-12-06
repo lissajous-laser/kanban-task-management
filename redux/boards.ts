@@ -62,7 +62,7 @@ const boardsSlice = createSlice({
             ? {
               id: column.id,
               name: column.name,
-              tasks: [...column.tasks, action.payload.task]
+              children: [...column.children, action.payload.task]
             }
             : column
           )
@@ -99,7 +99,7 @@ const boardsSlice = createSlice({
             )
           }
           : board
-        )
+        ) 
     },
 
     deleteTask: (state, action: PayloadAction<TaskAction>) => {

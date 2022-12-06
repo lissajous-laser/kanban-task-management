@@ -10,16 +10,10 @@ import {addTask, closeModalWin, editTask} from "../../redux/modalWin";
 import DropDown from "./DropDown";
 import ModalWinBackdropAndContainer from "./ModalWinBackdropAndContainer";
 import { Subheading } from "./Subheading";
-import SubtaskInputAndDeleteBtn from "./SubtaskInputAndDeleteBtn";
+import InputAndDeleteCombo from "./InputAndDeleteCombo";
 import { TextInput } from "./TextInput";
 import { Button } from "./Button";
-
-const Title = styled.h4`
-  font-size: 1.13rem;
-  color: ${(props) => props.theme.colors.textPrimary};
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-`
+import { Title } from "./Title";
 
 const TextArea = styled.textarea`
   height: 7rem;
@@ -106,7 +100,7 @@ export default function AddOrEditTaskModal() {
         {id: Date.now(), title: '', isCompleted: false}
       ]
     };
-
+    
     dispatchGivenMode(changedTask);
   }
 
@@ -120,7 +114,6 @@ export default function AddOrEditTaskModal() {
   }
 
   const submitHandler = () => {
-
     const taskAction: TaskAction = {
       boardId: currentBoardId,
       columnSelected: dropDownSelected.value, ///// FIX this
@@ -160,7 +153,7 @@ export default function AddOrEditTaskModal() {
       <Subheading>Subtasks</Subheading>
       <SubtasksContainer>
         {task.subtasks.map((subtask) =>
-          <SubtaskInputAndDeleteBtn
+          <InputAndDeleteCombo
             key={subtask.id}
             task={task}
             subtask={subtask}

@@ -1,11 +1,15 @@
 import Image from 'next/image';
+import { MouseEvent, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {jakartaSans} from '../lib/fonts';
 import {State} from '../lib/types';
 import moreIcon from '../public/assets/icon-vertical-ellipsis.svg';
-import {addTask} from '../redux/modalWin';
+import { toggleMenu } from '../redux/dropDownMenu';
+import {addTask, deleteBoard, editBoard} from '../redux/modalWin';
 import style from '../styles/Header.module.css';
+import { Menu } from './Menu';
+import { MenuOption } from './MenuOption';
 import { MoreButton } from './MoreButton';
 
 const Container = styled.header`
@@ -15,6 +19,7 @@ const Container = styled.header`
   border-bottom: 0.06rem solid ${(props) => props.theme.colors.outline};
   display: flex;
   justify-content: space-between;
+  position: relative;
 `
 
 const BoardHeading = styled.h2`
@@ -65,40 +70,78 @@ const MoreBtn = styled.button`
   }
 `
 
+const PositionedMenu = styled(Menu)`
+  right: 1.5rem;
+  top: 5.63rem;
+`
+
+const EditBoardOption = styled(MenuOption)`
+  color: ${(props) => props.theme.colors.textSecondary};
+
+`
+
+const DeleteBoardOption = styled(MenuOption)`
+  color: ${(props) => props.theme.colors.danger};
+`
+
+
 export default function Header() {
+  // const [menuIsOpen, setMenuIsOpen] = useState(false);
   const dispatch = useDispatch();
-  const currentBoard = useSelector((state: State) => state.currentBoardId);
+  const currentBoardId = useSelector((state: State) => state.currentBoardId);
   const boards = useSelector((state: State) => state.boards);
+  const dropDownMenu = useSelector((state: State) => state.dropDownMenu);
 
   const addTaskHandler = () => {
     dispatch(addTask({
       id: Date.now(),
       title: '',
       description: '',
-      subtasks: [{id: Date.now(),title: '', isCompleted: false}]
+      subtasks: [{id: Date.now(), title: '', isCompleted: false}]
     }))
   };
+
+  const moreBtnClickHandler = (event: MouseEvent<HTMLButtonElement>) => {
+    // console.log('before dispatch: ' + dropDownMenu);
+    dispatch(toggleMenu());
+    event.stopPropagation();
+  }
+
+  const editBoardClickHandler = () => {
+    dispatch(editBoard(boards.filter((board) => board.id === currentBoardId)[0]));
+  }
+
+  const deleteBoardClickHandler = () => {
+    dispatch(deleteBoard(boards.filter((board) => board.id === currentBoardId)[0]));
+  }
 
   return (
     <Container className={jakartaSans.className}>
       <BoardHeading>
-        {boards.filter((board) => board.id === currentBoard)[0].name}
+        {boards.filter((board) => board.id === currentBoardId)[0].name}
       </BoardHeading>
       <AddTaskAndMoreBtns>
         <AddTaskBtn
           className={jakartaSans.className}
-          onClick={addTaskHandler}          
+          onClick={addTaskHandler}        
         >
           + Add New Task
         </AddTaskBtn>
-        <MoreButton>
+        <MoreButton onClick={moreBtnClickHandler}>
           <Image
             className={style.moreIcon}
             src={moreIcon}
             alt='Vertical ellipsis icon'
           />
+ 
         </MoreButton>
       </AddTaskAndMoreBtns>
+      {dropDownMenu &&
+        <PositionedMenu>
+          <EditBoardOption onClick={editBoardClickHandler}>Edit Board</EditBoardOption>
+          <DeleteBoardOption>Delete Board</DeleteBoardOption>
+        </PositionedMenu>
+      }
     </Container>
   );
 }

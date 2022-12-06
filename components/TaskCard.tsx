@@ -10,7 +10,7 @@ const Container = styled.li`
   border-radius: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  box-shadow: 0 0.3rem 0.6rem rgba(191, 191, 191, 0.3);
+  box-shadow: 0 0.3rem 0.5rem rgba(191, 191, 191, 0.3);
 
   &:hover {
     cursor: pointer;
@@ -45,7 +45,7 @@ export default function TaskCard({task} : {task: Task}) {
     <Container onClick={clickHandler}>
       <Title>{task.title}</Title>
       <Progess>
-        {task.subtasks.filter((task) => task.isCompleted).length}
+        {task.subtasks.filter((subtask) => subtask.isCompleted).length}
         &nbsp;of {task.subtasks.length} subtasks
       </Progess>
     </Container>

@@ -5,6 +5,7 @@ import { jakartaSans } from '../lib/fonts';
 import { use } from 'react';
 import { Board, State } from '../lib/types';
 import BoardColumn from './BoardColumn';
+import AddColumn from './AddColumn';
 
 
 // TODO:
@@ -30,6 +31,7 @@ export default function BoardView() {
         .filter((board) => board.id === currentBoard)[0].columns
         .map((column, idx) => <BoardColumn key={column.id} idx={idx}/>)
       }
+      <AddColumn/>
     </Container>
   );
 }
