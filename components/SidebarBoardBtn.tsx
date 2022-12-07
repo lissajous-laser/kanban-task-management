@@ -57,7 +57,9 @@ export default function SidebarBoardBtn({board} : {board: Board}) {
   const dispatch = useDispatch();
 
   const clickHandler = () => {
-    dispatch(changeBoard(board.id))
+    console.log(board.id);
+    dispatch(changeBoard(board.id));
+
   }
 
   return (

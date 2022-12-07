@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const initState = 0;
 
+// A board id of -1 denotes that there Boards[] is empty.
 const currentBoardIdSlice = createSlice({
   name: 'currentBoardId',
   initialState: initState,

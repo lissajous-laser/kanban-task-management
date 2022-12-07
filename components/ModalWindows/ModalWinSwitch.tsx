@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { State } from "../../lib/types";
 import AddOrEditBoardModal from "./AddOrEditBoardModal";
 import AddOrEditTaskModal from "./AddOrEditTaskModal";
-import DeleteTaskModal from "./DeleteTaskModal";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
 import ViewTaskModal from "./ViewTaskModal";
 
 export default function ModalWinSwitch() {
@@ -13,26 +13,30 @@ export default function ModalWinSwitch() {
   }
 
   // Test if modalWin.data is a Task or Board.
-  if ('description' in modalWin.data) {
+  if ('subtasks' in modalWin.data) {
     switch (modalWin.mode) {
       case 'view':
         return <ViewTaskModal/>;
       case 'add':
         return <AddOrEditTaskModal/>;
       case 'delete':
-        return <DeleteTaskModal/>;
+        return <ConfirmDeleteModal/>;
       case 'edit':
         return <AddOrEditTaskModal/>;
       default:
         return null;
     }
-  } else {
+  } else if ('columns' in modalWin.data) {
     switch (modalWin.mode) {
       case 'edit':
         return <AddOrEditBoardModal/>;
+      case 'delete':
+        return <ConfirmDeleteModal/>;        
       default:
         return null;
     }
+  } else {
+    return null;
   }
 
 }

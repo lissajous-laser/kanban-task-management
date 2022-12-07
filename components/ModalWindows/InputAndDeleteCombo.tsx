@@ -106,7 +106,7 @@ export default function InputAndDeleteCombo(props :
   }
 
   const dispatchGivenMode = (changedItem: Task | Board) => {
-    if ('description' in changedItem) {
+    if ('subtasks' in changedItem) {
       switch (modalWinAction.mode) {
         case 'add':
           dispatch(addTask(changedItem));

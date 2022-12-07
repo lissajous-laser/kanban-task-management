@@ -91,14 +91,17 @@ export default function Header() {
   const currentBoardId = useSelector((state: State) => state.currentBoardId);
   const boards = useSelector((state: State) => state.boards);
   const dropDownMenu = useSelector((state: State) => state.dropDownMenu);
+  const currentBoard = boards.filter((board) => board.id === currentBoardId)[0];
 
   const addTaskHandler = () => {
-    dispatch(addTask({
-      id: Date.now(),
-      title: '',
-      description: '',
-      subtasks: [{id: Date.now(), title: '', isCompleted: false}]
-    }))
+    if (boards.length > 0) {
+      dispatch(addTask({
+        id: Date.now(),
+        title: '',
+        description: '',
+        subtasks: [{id: Date.now(), title: '', isCompleted: false}]
+      }))
+    }
   };
 
   const moreBtnClickHandler = (event: MouseEvent<HTMLButtonElement>) => {
@@ -108,17 +111,25 @@ export default function Header() {
   }
 
   const editBoardClickHandler = () => {
-    dispatch(editBoard(boards.filter((board) => board.id === currentBoardId)[0]));
+    if (boards.length > 0) {
+      dispatch(editBoard(boards.filter(
+        (board) => board.id === currentBoardId)[0])
+      );
+    }
   }
 
   const deleteBoardClickHandler = () => {
-    dispatch(deleteBoard(boards.filter((board) => board.id === currentBoardId)[0]));
+    if (boards.length > 0) {
+      dispatch(deleteBoard(boards.filter(
+        (board) => board.id === currentBoardId)[0])
+      );
+    }
   }
 
   return (
     <Container className={jakartaSans.className}>
       <BoardHeading>
-        {boards.filter((board) => board.id === currentBoardId)[0].name}
+        {currentBoard ? currentBoard.name : ''}
       </BoardHeading>
       <AddTaskAndMoreBtns>
         <AddTaskBtn
@@ -138,8 +149,12 @@ export default function Header() {
       </AddTaskAndMoreBtns>
       {dropDownMenu &&
         <PositionedMenu>
-          <EditBoardOption onClick={editBoardClickHandler}>Edit Board</EditBoardOption>
-          <DeleteBoardOption>Delete Board</DeleteBoardOption>
+          <EditBoardOption onClick={editBoardClickHandler}>
+            Edit Board
+          </EditBoardOption>
+          <DeleteBoardOption onClick={deleteBoardClickHandler}>
+            Delete Board
+          </DeleteBoardOption>
         </PositionedMenu>
       }
     </Container>

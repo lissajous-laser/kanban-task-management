@@ -121,13 +121,6 @@ const SidebarVisibleBtn = styled.button`
 `
 
 
-// TODO:
-// - boards are buttons
-// - create new board button 
-// - light/dark mode, appearance changes with state
-// - hide sidebar button
-
-
 export default function Sidebar() {
   const boards = useSelector((state: State) => state.boards);
 

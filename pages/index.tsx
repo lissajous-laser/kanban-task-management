@@ -14,7 +14,7 @@ import data from '../public/data.json'
 import {importBoards} from '../redux/boards';
 import styles from '../styles/Home.module.css';
 import {lightTheme} from '../themes';
-import DeleteTaskModal from '../components/ModalWindows/DeleteTaskModal';
+import ConfirmDeleteModal from '../components/ModalWindows/ConfirmDeleteModal';
 import AddOrEditBoardModal from '../components/ModalWindows/AddOrEditBoardModal';
 import ModalWinSwitch from '../components/ModalWindows/ModalWinSwitch';
 import { closeMenu } from '../redux/dropDownMenu';

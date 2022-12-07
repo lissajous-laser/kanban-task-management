@@ -23,13 +23,18 @@ const Container = styled.main`
 
 export default function BoardView() {
   const boards = useSelector((state: State) => state.boards);
-  const currentBoard = useSelector((state: State) => state.currentBoardId)
+  const currentBoardId = useSelector((state: State) => state.currentBoardId)
+  const currentBoard = boards.filter(
+    (board) => board.id === currentBoardId
+  )[0];
 
   return (
     <Container className={jakartaSans.className}>
-      {boards
-        .filter((board) => board.id === currentBoard)[0].columns
-        .map((column, idx) => <BoardColumn key={column.id} idx={idx}/>)
+      {currentBoard
+        ? currentBoard.columns.map((column, idx) =>
+          <BoardColumn key={column.id} idx={idx}/>
+        )
+        : null
       }
       <AddColumn/>
     </Container>

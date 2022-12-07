@@ -40,7 +40,11 @@ export default function AddColumn() {
   const currentBoardId = useSelector((state: State) => state.currentBoardId);
 
   const clickHandler = () => {
-    dispatch(editBoard(boards.filter((board) => board.id === currentBoardId)[0]))
+    if (boards.length > 0) {
+      dispatch(editBoard(
+        boards.filter((board) => board.id === currentBoardId)[0]
+      ));
+    }
   }
 
   return (

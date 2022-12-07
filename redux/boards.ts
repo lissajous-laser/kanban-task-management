@@ -62,7 +62,7 @@ const boardsSlice = createSlice({
             ? {
               id: column.id,
               name: column.name,
-              children: [...column.children, action.payload.task]
+              tasks: [...column.tasks, action.payload.task]
             }
             : column
           )
