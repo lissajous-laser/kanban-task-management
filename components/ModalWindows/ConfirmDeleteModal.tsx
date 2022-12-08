@@ -26,7 +26,7 @@ const DeleteButton = styled(Button)`
 `
 
 const CancelButton = styled(Button)`
-  background-color: rgba(99, 95, 199, 0.25);
+  background-color: ${(props) => props.theme.colors.buttonSecondaryBg};
   color: ${(props) => props.theme.colors.accent};
 `
 
@@ -52,7 +52,6 @@ export default function ConfirmDeleteModal() {
         (board) => board.id === currentBoardId
       )[0];
       const currentBoardIdx = boards.indexOf(currentBoard);
-      console.log('current: ' + currentBoardIdx);
       const nextCurrentBoardIdx =
         boards[currentBoardIdx + 1] === undefined
         ? currentBoardIdx - 1
@@ -65,6 +64,7 @@ export default function ConfirmDeleteModal() {
         nextCurrentBoardId = boards[nextCurrentBoardIdx].id;
       }
 
+      // Change current board.
       dispatch(changeBoard(nextCurrentBoardId));
       dispatch(deleteBoard(modalWinAction.data.id));
       

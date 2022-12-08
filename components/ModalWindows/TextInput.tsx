@@ -6,7 +6,7 @@ export const TextInput = styled.input`
   border-radius: 0.25rem;
   border: 0.06rem solid ${(props) => props.theme.colors.controlOutline};
   width: 100%;
-  color: ${(props) => props.theme.colors.textSecondary};
+  color: ${(props) => props.theme.colors.textPrimary};
   line-height: 1.44rem;
   font-size: 0.81rem;
   font-weight: 500;

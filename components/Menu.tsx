@@ -10,7 +10,7 @@ export const Menu = styled.ul`
   flex-direction: column;
   gap: 1rem;
   position: absolute;
-  box-shadow: 0 0.1rem 0.5rem rgba(191, 191, 191, 0.3);
+  box-shadow: ${(props) => props.theme.colors.shadow};
   margin-block-start: 0;
   margin-block-end: 0;
   list-style-type: none;

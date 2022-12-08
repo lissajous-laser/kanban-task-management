@@ -4,9 +4,10 @@ const sidebarVisSlice = createSlice({
   name: 'sidebarVis',
   initialState: true,
   reducers: {
-    toggleSidebarVis: (state) => !state
+    hideSidebar: () => false,
+    showSidebar: () => true,
   }
 })
 
-export const {toggleSidebarVis} = sidebarVisSlice.actions;
+export const {hideSidebar, showSidebar} = sidebarVisSlice.actions;
 export default sidebarVisSlice.reducer;

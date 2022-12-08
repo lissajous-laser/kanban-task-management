@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { jakartaSans } from "../../lib/fonts";
 import {State, Task, TaskAction} from "../../lib/types";
 import {addTask as addTaskToBoards, editTask as editTaskToBoards} from "../../redux/boards";
-import {addTask, closeModalWin, editTask} from "../../redux/modalWin";
+import {addTask, editTask, viewTask} from "../../redux/modalWin";
 import DropDown from "./DropDown";
 import ModalWinBackdropAndContainer from "./ModalWinBackdropAndContainer";
 import { Subheading } from "./Subheading";
@@ -40,13 +40,13 @@ const SubtasksContainer = styled.div`
 `
 
 const AddSubtaskButton = styled(Button)`
-  background-color: rgba(99, 95, 199, 0.25);
+  background-color: ${(props) => props.theme.colors.buttonSecondaryBg};
   color: ${(props) => props.theme.colors.accent};
 `
 
 const SubmitButton = styled(Button)`
   background-color: ${(props) => props.theme.colors.accent};
-  color: ${(props) => props.theme.colors.main};
+  color: ${(props) => props.theme.colors.buttonPrimaryText};
 `
 
 export default function AddOrEditTaskModal() {
@@ -80,7 +80,7 @@ export default function AddOrEditTaskModal() {
       title: event.target.value
     };
 
-    dispatchGivenMode(changedTask);
+    dispatchByMode(changedTask);
   }
 
   const descInputHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -89,7 +89,7 @@ export default function AddOrEditTaskModal() {
       description: event.target.value
     };
     
-    dispatchGivenMode(changedTask);
+    dispatchByMode(changedTask);
   }
 
   const addSubTaskHandler = () => {
@@ -101,35 +101,41 @@ export default function AddOrEditTaskModal() {
       ]
     };
     
-    dispatchGivenMode(changedTask);
+    dispatchByMode(changedTask);
   }
 
-  const dispatchGivenMode = (changedTask: Task) => {
-    switch (modalWinAction.mode) {
+  const dispatchByMode = (changedTask: Task) => {
+    switch (mode) {
       case 'add':
         dispatch(addTask(changedTask));
+        break;
       case 'edit':
         dispatch(editTask(changedTask));
+        break;
     }
   }
 
   const submitHandler = () => {
+    const changedTask = {
+      ...task,
+      subtasks: task.subtasks.filter((subtask) => subtask.title !== '')
+    }
+
     const taskAction: TaskAction = {
       boardId: currentBoardId,
-      columnSelected: dropDownSelected.value, ///// FIX this
-      task: {
-        ...task,
-        subtasks: task.subtasks.filter((subtask) => subtask.title !== '')
-      }
+      columnSelected: dropDownSelected.value,
+      task: changedTask
     }
 
     switch (modalWinAction.mode) {
       case 'add':
         dispatch(addTaskToBoards(taskAction));
+        break;
       case 'edit':
         dispatch(editTaskToBoards(taskAction));
+        break;
     }
-    dispatch(closeModalWin());
+    dispatch(viewTask(changedTask));
   }
 
   return (

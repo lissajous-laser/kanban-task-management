@@ -12,7 +12,7 @@ const StyledSelect = styled(Select)`
     opacity: 0;
   }
   & .Select__dropdown-indicator {
-    color: rgb(99, 95, 199);
+    color: ${(props) => props.theme.colors.accent};
   }
   & .Select__single-value {
     font-size: 0.81rem;
@@ -21,6 +21,7 @@ const StyledSelect = styled(Select)`
   }
   & .Select__control {
     border: 1px solid ${(props) => props.theme.colors.controlOutline};
+    background-color: ${(props) => props.theme.colors.secondary};
     height: 2.5rem;
   }
   & .Select__value-container {
@@ -28,12 +29,14 @@ const StyledSelect = styled(Select)`
   }
   & .Select__option {
     padding-left: 1.0rem;
-    color: ${(props) => props.theme.colors.textPrimary};
+    color: ${(props) => props.theme.colors.textSecondary};
+    background-color: ${(props) => props.theme.colors.secondary};
     font-size: 0.81rem;
-    
-
     &:current {
     }
+  }
+  & .Select__menu {
+    background-color: ${(props) => props.theme.colors.secondary};
   }
 `
 

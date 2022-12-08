@@ -59,10 +59,20 @@ const DeleteTaskOption = styled(MenuOption)`
 `
 
 export default function ViewTaskModal() {
+  const dispatch = useDispatch();
+  const boards = useSelector((state: State) => state.boards);
+  const currentBoardId = useSelector((state: State) => state.currentBoardId);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   // Type has been checked by parent component
   const task = useSelector((state: State) => state.modalWin).data as Task;
-  const dispatch = useDispatch();
+
+  const columnId = boards.filter(
+    (board) => board.id === currentBoardId
+  )[0].columns.filter(
+    (column) => column.tasks.map(
+      (task_) => task_.id
+    ).includes(task.id)
+  )[0].id;
 
   const moreBtnClickHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -112,6 +122,7 @@ export default function ViewTaskModal() {
             key={subtask.title}
             subtask={subtask}
             task={task}
+            columnId={columnId}
           />
         )}
       </SubtaskList>

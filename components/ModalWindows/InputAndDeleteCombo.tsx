@@ -110,15 +110,19 @@ export default function InputAndDeleteCombo(props :
       switch (modalWinAction.mode) {
         case 'add':
           dispatch(addTask(changedItem));
+          break;
         case 'edit':
           dispatch(editTask(changedItem));
+          break;
       }
     } else {
       switch (modalWinAction.mode) {
         case 'add':
           dispatch(addBoard(changedItem));
+          break;
         case 'edit':
           dispatch(editBoard(changedItem));
+          break;
       }      
     }
   }

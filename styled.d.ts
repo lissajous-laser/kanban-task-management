@@ -12,12 +12,15 @@ declare module 'styled-components' {
       textPrimary: string,
       textSecondary: string,
       textPlaceholder: string,
+      strikethroughTxt: string,
       accent: string,
-      secondaryBtn: string,
       danger: string,
       outline: string,
+      controlOutline: string,
+      addColumnBg: string,
       buttonPrimaryText: string,
-      controlOutline: string
+      buttonSecondaryBg: string,
+      shadow: string,
     }
   }
 }

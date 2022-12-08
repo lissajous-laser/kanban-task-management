@@ -18,16 +18,17 @@ export default function ModalWinSwitch() {
       case 'view':
         return <ViewTaskModal/>;
       case 'add':
-        return <AddOrEditTaskModal/>;
+      case 'edit':
+        return <AddOrEditTaskModal/>; 
       case 'delete':
         return <ConfirmDeleteModal/>;
-      case 'edit':
-        return <AddOrEditTaskModal/>;
+
       default:
         return null;
     }
   } else if ('columns' in modalWin.data) {
     switch (modalWin.mode) {
+      case 'add':
       case 'edit':
         return <AddOrEditBoardModal/>;
       case 'delete':

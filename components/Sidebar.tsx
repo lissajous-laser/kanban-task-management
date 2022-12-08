@@ -9,14 +9,18 @@ import moon from '../public/assets/icon-dark-theme.svg';
 import hideSidebarIcon from '../public/assets/icon-hide-sidebar.svg';
 import style from '../styles/Sidebar.module.css';
 import { useSelector } from "react-redux";
-import { State } from "../lib/types";
+import { Board, State } from "../lib/types";
 import SidebarBoardBtn from "./SidebarBoardBtn";
+import { useDispatch } from "react-redux";
+import { addBoard } from "../redux/modalWin";
+import { hideSidebar } from "../redux/sidebarVis";
+import { toggleDarkMode } from "../redux/darkMode";
 
 const Container = styled.nav`
   width: 300px;
   height: 100%;
   background-color: ${(props) => props.theme.colors.main};
-  border-right: 0.06rem solid ${(props) => props.theme.colors.outline}
+  border-right: 0.06rem solid ${(props) => props.theme.colors.outline};
 `;
 
 const Column = styled.div`
@@ -37,10 +41,6 @@ const BoardsListHead = styled.div`
 
 const BoardsPanel = styled.div`
   width: 17.25rem;
-`
-
-const ColumnLOffset = styled.div`
-  padding-left: 2.0rem;
 `
 
 const NewBoardBtn = styled.button`
@@ -79,13 +79,17 @@ const ThemePanel = styled.div`
   border-radius: 0.38rem;
 `
 
-const ThemeBtn = styled.button`
+const ThemeBtn = styled.button<{darkMode: boolean}>`
   background-color: ${(props) => props.theme.colors.accent};
   width: 2.50rem;
   height: 1.25rem;
   border: none;
   border-radius: 0.63rem;
   display: flex;
+  justify-content: ${(props) => 
+    props.darkMode 
+    ? 'right' 
+    : 'left'};
   align-items: center;
   padding: 0.19rem;
 
@@ -95,14 +99,14 @@ const ThemeBtn = styled.button`
 `
 
 const ToggleLever = styled.div`
-  background-color: ${(props) => props.theme.colors.main};
+  background-color: ${(props) => props.theme.colors.buttonPrimaryText};
   height: 0.88rem;
   width: 0.88rem;
   border-radius: 0.44rem;
 
 `
 
-const SidebarVisibleBtn = styled.button`
+const HideSidebarBtn = styled.button`
   border: none;
   background-color: ${(props) => props.theme.colors.main};
   color: ${(props) => props.theme.colors.textSecondary};
@@ -120,50 +124,90 @@ const SidebarVisibleBtn = styled.button`
   }
 `
 
-
 export default function Sidebar() {
-  const boards = useSelector((state: State) => state.boards);
+  const dispatch = useDispatch();
+  const boards: Board[] = useSelector((state: State) => state.boards);
+  const darkMode = useSelector((state: State) => state.darkMode);
+
+  const newBoardClickHandler = () => {
+    const baseId = Date.now();
+
+    const newBoard: Board = {
+      id: baseId,
+      name: '',
+      columns: [
+        {id: baseId + 1, name: 'Todo', tasks: []},
+        {id: baseId + 2, name: 'Doing', tasks: []}
+      ]
+    }
+    dispatch(addBoard(newBoard));
+  }
+
+  const darkModeClickHandler = () => {
+    dispatch(toggleDarkMode());
+  }
+
+
+  const hideSidebarClickHandler = () => {
+    dispatch(hideSidebar());
+  }
 
   return (
-  <Container className={jakartaSans.className}>
-    <Column>
-      <div>
-        <Image
-          className={style.logo}
-          src={logoLight}
-          alt='logo'
-        />
-        <BoardsPanel>
-          <BoardsListHead>
-            ALL BOARDS
-          </BoardsListHead>
-          <ListOfBoards>
-            {boards.map((board) => <SidebarBoardBtn key={board.id} board={board}/>)}
-          </ListOfBoards>
-          <NewBoardBtn className={jakartaSans.className}>
-            <Image
-              className={style.boardIcon}
-              src={boardIcon}
-              alt='Kanban board icon'
-            />
-            <div>+ Create New Board</div>
-          </NewBoardBtn>
+    <Container className={jakartaSans.className}>
+      <Column>
+        <div>
+          <Image
+            className={style.logo}
+            src={darkMode ? logoDark :  logoLight}
+            alt='logo'
+          />
+          <BoardsPanel>
+            <BoardsListHead>
+              ALL BOARDS
+            </BoardsListHead>
+            <ListOfBoards>
+              {boards.map((board) => 
+                <SidebarBoardBtn key={board.id} board={board}/>
+              )}
+            </ListOfBoards>
+            <NewBoardBtn 
+              onClick={newBoardClickHandler} 
+              className={jakartaSans.className}
+            >
+              <Image
+                className={style.boardIcon}
+                src={boardIcon}
+                alt='Kanban board icon'
+              />
+              <div>+ Create New Board</div>
+            </NewBoardBtn>
 
-        </BoardsPanel>
-      </div>
-      <div>
-        <ThemePanel>
-          <Image src={sun} alt='Sun icon'/>
-          <ThemeBtn>
-            <ToggleLever/>
-          </ThemeBtn>
-          <Image src={moon} alt='Moon icon'/>
-        </ThemePanel>   
-        <SidebarVisibleBtn className={jakartaSans.className}>
-          <Image className={style.hideSidebarIcon} src={hideSidebarIcon} alt='Hide sidebar icon'/>
-          <div>Hide Sidebar</div>
-        </SidebarVisibleBtn>
-      </div>
-    </Column>
-  </Container>);
+          </BoardsPanel>
+        </div>
+        <div>
+          <ThemePanel>
+            <Image src={sun} alt='Sun icon'/>
+            <ThemeBtn
+              onClick={darkModeClickHandler}
+              darkMode={darkMode}
+            >
+              <ToggleLever/>
+            </ThemeBtn>
+            <Image src={moon} alt='Moon icon'/>
+          </ThemePanel>   
+          <HideSidebarBtn
+            onClick={hideSidebarClickHandler}
+            className={jakartaSans.className}
+          >
+            <Image 
+              className={style.hideSidebarIcon} 
+              src={hideSidebarIcon} 
+              alt='Hide sidebar icon'
+            />
+            <div>Hide Sidebar</div>
+          </HideSidebarBtn>
+        </div>
+      </Column>
+    </Container>
+  );
 }

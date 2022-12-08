@@ -78,24 +78,18 @@ const boardsSlice = createSlice({
             id: board.id,
             name: board.name,
             columns: board.columns.map((column) =>
-              column.id !== action.payload.columnSelected
-              ? {
+               ({
                 id: column.id,
                 name: column.name,
-                tasks: column.tasks.filter((task) =>
-                  task.id !== action.payload.task.id)
-              }
-              : column.id === action.payload.columnSelected
-              ? {
-                id: column.id,
-                name: column.name,
-                tasks: [
-                  ...column.tasks.filter((task) =>
-                    task.id !== action.payload.task.id),
-                  action.payload.task
-                ]
-              }
-              : column
+                tasks: column.id === action.payload.columnSelected
+                ? [
+                    ...column.tasks.filter((task) =>
+                      task.id !== action.payload.task.id),
+                    action.payload.task
+                  ]
+                : column.tasks.filter((task) =>
+                    task.id !== action.payload.task.id)
+              })
             )
           }
           : board

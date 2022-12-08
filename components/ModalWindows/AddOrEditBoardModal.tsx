@@ -21,30 +21,30 @@ const ColumnsContainer = styled.div`
 `
 
 const AddColumnButton = styled(Button)`
-  background-color: rgba(99, 95, 199, 0.25);
+  background-color: ${(props) => props.theme.colors.buttonSecondaryBg};
   color: ${(props) => props.theme.colors.accent};
 `
 
 const SubmitButton = styled(Button)`
   background-color: ${(props) => props.theme.colors.accent};
-  color: ${(props) => props.theme.colors.main};
+  color: ${(props) => props.theme.colors.buttonPrimaryText};
 `
 
 export default function AddOrEditBoardModal() {
   const dispatch = useDispatch();
   const modalWinAction = useSelector((state: State) => state.modalWin);
   const board = modalWinAction.data as Board;
+  const mode = modalWinAction.mode;
 
   const nameInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const changedBoard = {
       ...board,
       name: event.target.value
     };
-
-    dispatchGivenMode(changedBoard);
+    dispatchByMode(changedBoard);
   }
 
-  const addColumnHandler = () => {
+  const addColumnClickHandler = () => {
     const changedBoard = {
       ...board,
       columns: [
@@ -52,30 +52,38 @@ export default function AddOrEditBoardModal() {
         {id: Date.now(), name: '', tasks: []}
       ]
     }
-
-    dispatchGivenMode(changedBoard);
+    dispatchByMode(changedBoard);
   }
 
-  const dispatchGivenMode = (changedBoard: Board) => {
-    switch (modalWinAction.mode) {
+  const dispatchByMode = (changedBoard: Board) => {
+    switch (mode) {
       case 'add':
         dispatch(addBoard(changedBoard));
+        break;
       case 'edit':
         dispatch(editBoard(changedBoard));
-    }
-  }
+        break;
 
-  const submitHandler = () => {
-    switch (modalWinAction.mode) {
+    }
+  }  
+
+  const submitClickHandler = () => {
+    switch (mode) {
+      case 'add':
+        dispatch(addBoardToBoards(board));
+        break;
       case 'edit':
         dispatch(editBoardToBoards(board));
+        break;
     }
     dispatch(closeModalWin());
   }
 
   return (
     <ModalWinBackdropAndContainer>
-      <Title>Edit Board</Title>
+      <Title>
+        {mode === 'add' ? 'Add New' : 'Edit'} Board
+      </Title>
       <Subheading>Board Name</Subheading>
       <TextInput
         className={jakartaSans.className}
@@ -94,15 +102,15 @@ export default function AddOrEditBoardModal() {
       </ColumnsContainer>
       <AddColumnButton
         className={jakartaSans.className}
-        onClick={addColumnHandler}
+        onClick={addColumnClickHandler}
       >
         + Add New Column
       </AddColumnButton>
       <SubmitButton
         className={jakartaSans.className}
-        onClick={submitHandler}
+        onClick={submitClickHandler}
       >
-        Save Changes
+        {mode === 'add' ? 'Create Task' : 'Save Changes'}
       </SubmitButton>
     </ModalWinBackdropAndContainer>
   );

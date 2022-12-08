@@ -4,7 +4,7 @@ import currentBoardReducer from './currentBoardId';
 import sidebarVisReducer from './sidebarVis';
 import modalWinReducer from './modalWin';
 import dropDownMenuReducer from './dropDownMenu';
-import dropDownMenu from './dropDownMenu';
+import darkModeReducer from './darkMode';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +12,7 @@ export const store = configureStore({
     currentBoardId: currentBoardReducer,
     sidebarVis: sidebarVisReducer,
     modalWin: modalWinReducer,
-    dropDownMenu: dropDownMenuReducer
+    dropDownMenu: dropDownMenuReducer,
+    darkMode: darkModeReducer
   }
 })

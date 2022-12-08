@@ -7,6 +7,7 @@ import boardIcon from '../public/assets/icon-board.svg';
 import boardIconWhite from '../public/assets/icon-board-white.svg';
 import { changeBoard } from '../redux/currentBoardId';
 import style from '../styles/Sidebar.module.css';
+import { jakartaSans } from '../lib/fonts';
 
 const BoardBtnWrapper = styled.div<{isCurrentBoard: boolean}>`
   height: 3.0rem;
@@ -67,6 +68,7 @@ export default function SidebarBoardBtn({board} : {board: Board}) {
       <BoardBtn
         isCurrentBoard={currentBoard === board.id}
         onClick={clickHandler}
+        className={jakartaSans.className}
       >
         <Image
           className={style.boardIcon}

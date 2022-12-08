@@ -2,7 +2,8 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { State, Subtask, Task, TaskAction } from "../../lib/types";
+import { jakartaSans } from "../../lib/fonts";
+import { Column, State, Subtask, Task, TaskAction } from "../../lib/types";
 import checkIcon from '../../public/assets/icon-check.svg';
 import {editTask} from "../../redux/boards";
 import {viewTask} from "../../redux/modalWin";
@@ -20,7 +21,6 @@ const SubtaskBtn = styled.button`
   background-color: ${(props) => props.theme.colors.secondary};
   border: none;
   padding: 0;
-  color: ${(props) => props.theme.colors.textSecondary};
   display: flex;
   align-items: center;
   height: 2rem;
@@ -36,8 +36,8 @@ const CheckBox = styled.div<{isCompleted: boolean}>`
   height: 1.0rem;
   width: 1.0rem;
   border-radius: 0.13rem;
-  background-color: ${(props) =>
-    props.isCompleted
+  background-color: 
+    ${(props) => props.isCompleted
     ? (props) => props.theme.colors.accent
     : (props) => props.theme.colors.main
   };
@@ -58,17 +58,20 @@ const Title = styled.p<{isCompleted: boolean}>`
   };
   color: ${(props) =>
     props.isCompleted
-    ? (props) => props.theme.colors.textSecondary
+    ? (props) => props.theme.colors.strikethroughTxt
     : (props) => props.theme.colors.textPrimary
   };
 `
 
 export default function SubtaskCard({
   subtask,
-  task // the Task where subtask is located in 
+  task, // the Task where subtask is located in 
+  columnId
 } : {
   subtask: Subtask,
-  task: Task}) {
+  task: Task,
+  columnId: number
+}) {
   
   const dispatch = useDispatch();
   const currendBoardId = useSelector((state: State) => state.currentBoardId);
@@ -87,6 +90,7 @@ export default function SubtaskCard({
 
     const taskAction: TaskAction = {
       boardId: currendBoardId,
+      columnSelected: columnId,
       task: changedTask
     };
     dispatch(editTask(taskAction));
@@ -95,9 +99,14 @@ export default function SubtaskCard({
 
   return (
     <SubtaskContainer>
-      <SubtaskBtn onClick={clickHandler}>
+      <SubtaskBtn
+        onClick={clickHandler}
+        className={jakartaSans.className}
+      >
         <CheckBox isCompleted={subtask.isCompleted}>
-          <Image src={checkIcon} alt='Check mark icon'/>
+          {subtask.isCompleted &&
+            <Image src={checkIcon} alt='Check mark icon'/>
+          }
         </CheckBox>
         <Title isCompleted={subtask.isCompleted}>
           {subtask.title}

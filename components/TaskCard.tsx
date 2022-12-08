@@ -10,7 +10,7 @@ const Container = styled.li`
   border-radius: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  box-shadow: 0 0.3rem 0.5rem rgba(191, 191, 191, 0.3);
+  box-shadow: ${(props) => props.theme.colors.shadow};
 
   &:hover {
     cursor: pointer;

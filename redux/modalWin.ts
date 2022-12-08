@@ -14,10 +14,9 @@ const modalWinSlice = createSlice({
   name: 'modalWin',
   initialState: initState,
   reducers: {
-    // No data required because it is being added to Board[]
-    addBoard: (state, action) => ({
+    addBoard: (state, action: PayloadAction<Board>) => ({
       mode: 'add',
-      data: {}
+      data: action.payload
     }),
     editBoard: (state, action: PayloadAction<Board>) => ({
       mode: 'edit',
@@ -27,8 +26,6 @@ const modalWinSlice = createSlice({
       mode: 'delete',
       data: action.payload
     }),
-    // For adding a task, it is being added TO the Board in
-    // the payload.
     addTask: (state, action: PayloadAction<Task>) => ({
       mode: 'add',
       data: action.payload

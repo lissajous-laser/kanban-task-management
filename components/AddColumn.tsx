@@ -18,9 +18,7 @@ const Button = styled.button`
   height: 70%; */
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    180deg, #E9EFFA 0%, rgba(233, 239, 250, 0.5) 100%
-  );
+  background: ${(props) => props.theme.colors.addColumnBg};
   color: ${(props) => props.theme.colors.textSecondary};
   padding: 0;
   border: 0;
@@ -29,6 +27,7 @@ const Button = styled.button`
   /* margin-top: 3.94rem; */
   font-size: 1.5rem;
   font-weight: 700;
+
   &:hover {
     cursor: pointer;
   }

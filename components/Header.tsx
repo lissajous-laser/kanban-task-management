@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {jakartaSans} from '../lib/fonts';
@@ -86,7 +86,6 @@ const DeleteBoardOption = styled(MenuOption)`
 
 
 export default function Header() {
-  // const [menuIsOpen, setMenuIsOpen] = useState(false);
   const dispatch = useDispatch();
   const currentBoardId = useSelector((state: State) => state.currentBoardId);
   const boards = useSelector((state: State) => state.boards);
@@ -95,17 +94,18 @@ export default function Header() {
 
   const addTaskHandler = () => {
     if (boards.length > 0) {
-      dispatch(addTask({
+        const newTask = {
         id: Date.now(),
         title: '',
         description: '',
         subtasks: [{id: Date.now(), title: '', isCompleted: false}]
-      }))
+      }
+
+      dispatch(addTask(newTask))
     }
   };
 
   const moreBtnClickHandler = (event: MouseEvent<HTMLButtonElement>) => {
-    // console.log('before dispatch: ' + dropDownMenu);
     dispatch(toggleMenu());
     event.stopPropagation();
   }
