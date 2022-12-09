@@ -14,13 +14,17 @@ declare module 'styled-components' {
       textPlaceholder: string,
       strikethroughTxt: string,
       accent: string,
+      accentHover: string,
+      accentFaded: string,
       danger: string,
+      dangerHover: string,
       outline: string,
       controlOutline: string,
       addColumnBg: string,
       buttonPrimaryText: string,
       buttonSecondaryBg: string,
       shadow: string,
+      menuOptHover: string,
     }
   }
 }

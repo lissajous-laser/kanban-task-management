@@ -18,7 +18,7 @@ const Title = styled.h3`
   margin-bottom: 0;
 `
 
-const colorMarkers = ['#49C4E5', '#8471F2', '#67E2AE', '#dc78f0'];
+const colorMarkers = ['#49C4E5', '#8471F2', '#67E2AE', '#f084f0'];
 
 const ColorCircle = styled.div<{idx: number}>`
   height: 0.94rem;

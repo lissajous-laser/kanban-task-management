@@ -1,4 +1,3 @@
-import { current } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -23,6 +22,10 @@ const ButtonCluster = styled.div`
 const DeleteButton = styled(Button)`
   background-color: ${(props) => props.theme.colors.danger};
   color: ${(props) => props.theme.colors.buttonPrimaryText};
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.dangerHover};
+  }
 `
 
 const CancelButton = styled(Button)`

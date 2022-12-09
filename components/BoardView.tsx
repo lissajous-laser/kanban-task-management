@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import {useSelector} from 'react-redux';
-import TaskCard from './TaskCard';
-import { jakartaSans } from '../lib/fonts';
-import { use } from 'react';
-import { Board, State } from '../lib/types';
+import {jakartaSans} from '../lib/fonts';
+import {State} from '../lib/types';
 import BoardColumn from './BoardColumn';
 import AddColumn from './AddColumn';
 

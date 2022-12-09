@@ -8,26 +8,9 @@ import boardIconWhite from '../public/assets/icon-board-white.svg';
 import { changeBoard } from '../redux/currentBoardId';
 import style from '../styles/Sidebar.module.css';
 import { jakartaSans } from '../lib/fonts';
+import { SidebarBtn } from './SidebarBtn';
 
-const BoardBtnWrapper = styled.div<{isCurrentBoard: boolean}>`
-  height: 3.0rem;
-  display: flex;
-  align-items: center;
-  width: 17.25rem;
-  border-radius: 0 1.5rem 1.5rem 0;
-  background-color:  ${(props) =>
-    props.isCurrentBoard
-    ? (props) => props.theme.colors.accent
-    : (props) => props.theme.colors.main
-  };
-  border-left: 2.0rem solid ${(props) =>
-    props.isCurrentBoard
-    ? (props) => props.theme.colors.accent
-    : (props) => props.theme.colors.main
-  };
-`
-
-const BoardBtn = styled.button<{isCurrentBoard: boolean}>`
+const BoardBtn = styled(SidebarBtn)<{isCurrentBoard: boolean}>`
   background-color:  ${(props) =>
     props.isCurrentBoard
     ? (props) => props.theme.colors.accent
@@ -38,17 +21,19 @@ const BoardBtn = styled.button<{isCurrentBoard: boolean}>`
     ? (props) => props.theme.colors.buttonPrimaryText
     : (props) => props.theme.colors.textSecondary
   };
-  border: none;
-  font-size: 0.94rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  padding: 0;
-  height: 2rem;
-  width: 13.75rem;
   
   &:hover {
     cursor: pointer;
+    background-color: ${(props) =>
+      props.isCurrentBoard
+      ? (props) => props.theme.colors.accent
+      : (props) => props.theme.colors.buttonSecondaryBg
+    };
+    color: ${(props) =>
+      props.isCurrentBoard
+      ? (props) => props.theme.colors.buttonPrimaryText
+      : (props) => props.theme.colors.accent
+    };
   }
 `
 
@@ -58,25 +43,22 @@ export default function SidebarBoardBtn({board} : {board: Board}) {
   const dispatch = useDispatch();
 
   const clickHandler = () => {
-    console.log(board.id);
     dispatch(changeBoard(board.id));
 
   }
 
   return (
-    <BoardBtnWrapper isCurrentBoard={currentBoard === board.id}>
-      <BoardBtn
-        isCurrentBoard={currentBoard === board.id}
-        onClick={clickHandler}
-        className={jakartaSans.className}
-      >
-        <Image
-          className={style.boardIcon}
-          src={currentBoard === board.id ? boardIconWhite : boardIcon}
-          alt='Kanban board icon'
-        />
-        <div>{board.name}</div>
-      </BoardBtn>
-    </BoardBtnWrapper>
+    <BoardBtn
+      isCurrentBoard={currentBoard === board.id}
+      onClick={clickHandler}
+      className={jakartaSans.className}
+    >
+      <Image
+        className={style.boardIcon}
+        src={currentBoard === board.id ? boardIconWhite : boardIcon}
+        alt='Kanban board icon'
+      />
+      <div>{board.name}</div>
+    </BoardBtn>
   );
 }

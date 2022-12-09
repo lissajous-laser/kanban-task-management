@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import {useSelector} from "react-redux";
 import {useDispatch} from "react-redux";
@@ -11,9 +10,14 @@ import DropDown from "./DropDown";
 import ModalWinBackdropAndContainer from "./ModalWinBackdropAndContainer";
 import { Subheading } from "./Subheading";
 import InputAndDeleteCombo from "./InputAndDeleteCombo";
-import { TextInput } from "./TextInput";
 import { Button } from "./Button";
 import { Title } from "./Title";
+import { TextInputWithValidation } from "./TextInputWithValidation";
+import ValidationMsg from "./ValidationMsg";
+
+const TextInputWithValidationContainer = styled.div`
+  position: relative;
+`
 
 const TextArea = styled.textarea`
   height: 7rem;
@@ -21,13 +25,17 @@ const TextArea = styled.textarea`
   border-radius: 0.25rem;
   border: 0.06rem solid ${(props) => props.theme.colors.controlOutline};
   width: 100%;
-  color: ${(props) => props.theme.colors.textSecondary};
+  color: ${(props) => props.theme.colors.textPrimary};
   line-height: 1.44rem;
   font-size: 0.81rem;
   font-weight: 500;
   padding: 0.5rem 1rem;
   resize: none;
   
+  &:hover {
+    border-color: ${(props) => props.theme.colors.accent};
+  }
+
   &::placeholder {
     color: ${(props) => props.theme.colors.textPlaceholder};
   }
@@ -47,10 +55,17 @@ const AddSubtaskButton = styled(Button)`
 const SubmitButton = styled(Button)`
   background-color: ${(props) => props.theme.colors.accent};
   color: ${(props) => props.theme.colors.buttonPrimaryText};
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.accentHover};
+  }
 `
 
 export default function AddOrEditTaskModal() {
   const dispatch = useDispatch();
+  // State for showing validation message
+  // - if Title text input is empty.
+  const [isValidInput, setIsValidInput] = useState(true);
   const modalWinAction = useSelector((state: State) => state.modalWin);
   const task = modalWinAction.data as Task;
   const mode = modalWinAction.mode;
@@ -81,6 +96,7 @@ export default function AddOrEditTaskModal() {
     };
 
     dispatchByMode(changedTask);
+    setIsValidInput(true);
   }
 
   const descInputHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -116,6 +132,12 @@ export default function AddOrEditTaskModal() {
   }
 
   const submitHandler = () => {
+    // Stop submission if Title text input is empty. 
+    if (task.title === '') {
+      setIsValidInput(false);
+      return;
+    }
+
     const changedTask = {
       ...task,
       subtasks: task.subtasks.filter((subtask) => subtask.title !== '')
@@ -142,12 +164,16 @@ export default function AddOrEditTaskModal() {
     <ModalWinBackdropAndContainer>
       <Title>{mode === 'add' ? 'Add New' : 'Edit'} Task</Title>
       <Subheading>Title</Subheading>
-      <TextInput
-        className={jakartaSans.className}
-        onChange={titleInputHandler}
-        placeholder='e.g. Take coffee break'
-        value={task.title}
-      />
+      <TextInputWithValidationContainer>
+        <TextInputWithValidation
+          className={jakartaSans.className}
+          onChange={titleInputHandler}
+          placeholder='e.g. Take coffee break'
+          value={task.title}
+          isValidInput={isValidInput}
+        />
+        {!isValidInput && <ValidationMsg/>}
+      </TextInputWithValidationContainer>
       <Subheading>Description</Subheading>
       <TextArea
         onChange={descInputHandler}

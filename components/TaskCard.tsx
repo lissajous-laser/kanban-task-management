@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { jakartaSans } from "../lib/fonts";
 import { Task } from "../lib/types";
 import { viewTask } from "../redux/modalWin";
 
@@ -23,6 +22,10 @@ const Title = styled.h4`
   font-weight: 700;
   margin-top: 1.44rem;
   margin-bottom: 0;
+
+  &:hover {
+    color: ${(props) => props.theme.colors.accent};
+  }
 `
 
 const Progess = styled.h5`

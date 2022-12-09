@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { jakartaSans } from "../../lib/fonts";
-import { Board, Column, Mode, State, Subtask, Task } from "../../lib/types";
-import closeIcon from '../../public/assets/icon-cross.svg';
+import { Board, Column, State, Subtask, Task } from "../../lib/types";
+import deleteIcon from '../../public/assets/icon-cross.svg';
+import deleteIconHover from '../../public/assets/icon-cross-red.svg';
 import { addBoard, addTask, editBoard, editTask } from "../../redux/modalWin";
 import { TextInput } from "./TextInput";
 
@@ -36,6 +37,7 @@ export default function InputAndDeleteCombo(props :
   {task: Task, subtask: Subtask} | {board: Board, column: Column}
 ) {
 
+  const [isHovered, setIsHovered] = useState(false);
   const dispatch = useDispatch();
   const modalWinAction = useSelector((state: State) => state.modalWin);
 
@@ -132,14 +134,18 @@ export default function InputAndDeleteCombo(props :
       <SubtaskInputWrapper>
       <TextInput
         className={jakartaSans.className}
-        placeholder='e.g. Make coffee'
+        placeholder={'task' in props ? 'e.g. Make coffee' : 'eg. Todo'}
         value={'task' in props ? props.subtask.title : props.column.name}
         onChange={textInputHandler}
       />
       </SubtaskInputWrapper>
-      <DeleteSubtaskBtn onClick={deleteSubtaskHandler}>
+      <DeleteSubtaskBtn
+        onClick={deleteSubtaskHandler}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <Image
-          src={closeIcon}
+          src={isHovered ? deleteIconHover : deleteIcon}
           alt='Delete subtask'
         />
       </DeleteSubtaskBtn>

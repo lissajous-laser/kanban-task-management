@@ -15,6 +15,10 @@ export const TextInput = styled.input`
   font-size: 0.81rem;
   font-weight: 500;
 
+  &:hover {
+    border-color: ${(props) => props.theme.colors.accent}
+  }
+
   &::placeholder {
     color: ${(props) => props.theme.colors.textPlaceholder};
   }

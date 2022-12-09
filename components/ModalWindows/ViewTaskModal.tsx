@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { useState } from 'react';
 import styled from 'styled-components';
 import {jakartaSans} from '../../lib/fonts';
-import {State, Task, TaskAction} from '../../lib/types';
+import {State, Task} from '../../lib/types';
 import moreIcon from '../../public/assets/icon-vertical-ellipsis.svg';
 import { deleteTask, editTask } from '../../redux/modalWin';
 import { MoreButton } from '../MoreButton';
@@ -14,6 +14,7 @@ import ModalWinBackdropAndContainer from './ModalWinBackdropAndContainer';
 import { Title } from './Title';
 import { Text } from './Text';
 import { Menu } from '../Menu';
+import { MenuOption } from '../MenuOption';
 
 const TitleAndMoreBtn = styled.div`
   width: 100%;
@@ -36,17 +37,6 @@ const SubtaskList = styled.ul`
 
 const PositionedMenu = styled(Menu)`
   top: 2.63rem;
-`
-
-const MenuOption = styled.li`
-  height: 1.44rem;
-  width: 100%;
-  line-height: 1.44rem;
-  text-align: left;
-
-  &:hover {
-    cursor: pointer;
-  }
 `
 
 const EditTaskOption = styled(MenuOption)`

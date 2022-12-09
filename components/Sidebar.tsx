@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styled from "styled-components";
+import styled, { StyledComponent } from "styled-components";
 import {jakartaSans} from '../lib/fonts';
 import boardIcon from '../public/assets/icon-board.svg';
 import logoLight from '../public/assets/logo-dark.svg';
@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { addBoard } from "../redux/modalWin";
 import { hideSidebar } from "../redux/sidebarVis";
 import { toggleDarkMode } from "../redux/darkMode";
+import { SidebarBtn } from "./SidebarBtn";
 
 const Container = styled.nav`
   width: 300px;
@@ -43,20 +44,14 @@ const BoardsPanel = styled.div`
   width: 17.25rem;
 `
 
-const NewBoardBtn = styled.button`
+const NewBoardBtn: StyledComponent<'button', any, {}, never> = styled(SidebarBtn)`
   background-color: ${(props) => props.theme.colors.main};
   color: ${(props) => props.theme.colors.accent};
-  border: none;
-  font-size: 0.94rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  height: 3rem;
-  padding: 0;
-  margin-left: 2.0rem;
   
   &:hover {
     cursor: pointer;
+    background-color: ${(props) => props.theme.colors.buttonSecondaryBg};
+    color: ${(props) => props.theme.colors.accent};
   }
 `
 
@@ -95,6 +90,8 @@ const ThemeBtn = styled.button<{darkMode: boolean}>`
 
   &:hover {
     cursor: pointer;
+    background-color: ${(props) => props.theme.colors.accentHover};
+
   }
 `
 
@@ -106,21 +103,16 @@ const ToggleLever = styled.div`
 
 `
 
-const HideSidebarBtn = styled.button`
-  border: none;
+const HideSidebarBtn = styled(SidebarBtn)`
   background-color: ${(props) => props.theme.colors.main};
   color: ${(props) => props.theme.colors.textSecondary};
-  font-size: 0.94rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  margin-left: 1.94rem;
-  margin-top: 1.38rem;
-  margin-bottom: 2.94rem;
-  padding: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 2.0rem;
 
   &:hover {
     cursor: pointer;
+    background-color: ${(props) => props.theme.colors.buttonSecondaryBg};
+    color: ${(props) => props.theme.colors.accent};
   }
 `
 
@@ -136,14 +128,14 @@ export default function Sidebar() {
       id: baseId,
       name: '',
       columns: [
-        {id: baseId + 1, name: 'Todo', tasks: []},
-        {id: baseId + 2, name: 'Doing', tasks: []}
+        {id: baseId + 1, name: '', tasks: []},
       ]
     }
     dispatch(addBoard(newBoard));
   }
 
   const darkModeClickHandler = () => {
+    console.log(boards);
     dispatch(toggleDarkMode());
   }
 

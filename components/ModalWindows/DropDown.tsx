@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import Select, {ActionMeta, SingleValue} from 'react-select';
+import Select, {SingleValue} from 'react-select';
 import styled from 'styled-components';
 import {jakartaSans} from '../../lib/fonts';
 import { State, Task, TaskAction } from '../../lib/types';
@@ -23,6 +23,10 @@ const StyledSelect = styled(Select)`
     border: 1px solid ${(props) => props.theme.colors.controlOutline};
     background-color: ${(props) => props.theme.colors.secondary};
     height: 2.5rem;
+
+    &:hover {
+      border-color: ${(props) => props.theme.colors.accent};
+    }
   }
   & .Select__value-container {
     padding-left: 0.88rem;
@@ -32,7 +36,8 @@ const StyledSelect = styled(Select)`
     color: ${(props) => props.theme.colors.textSecondary};
     background-color: ${(props) => props.theme.colors.secondary};
     font-size: 0.81rem;
-    &:current {
+    &:hover {
+      background-color: ${(props) => props.theme.colors.accentFaded};
     }
   }
   & .Select__menu {

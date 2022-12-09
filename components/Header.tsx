@@ -54,6 +54,7 @@ const AddTaskBtn = styled.button`
 
   &:hover {
     cursor: pointer;
+    background-color: ${(props) => props.theme.colors.accentHover};
   }
 `
 
@@ -77,7 +78,6 @@ const PositionedMenu = styled(Menu)`
 
 const EditBoardOption = styled(MenuOption)`
   color: ${(props) => props.theme.colors.textSecondary};
-
 `
 
 const DeleteBoardOption = styled(MenuOption)`
@@ -144,7 +144,6 @@ export default function Header() {
             src={moreIcon}
             alt='Vertical ellipsis icon'
           />
- 
         </MoreButton>
       </AddTaskAndMoreBtns>
       {dropDownMenu &&

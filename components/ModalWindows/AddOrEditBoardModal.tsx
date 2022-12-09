@@ -1,8 +1,7 @@
-import { current } from '@reduxjs/toolkit';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import styled, {ThemeProvider} from 'styled-components';
+import styled from 'styled-components';
 import { jakartaSans } from '../../lib/fonts';
 import { Board, State, TaskAction } from '../../lib/types';
 import { addBoard, closeModalWin, editBoard } from '../../redux/modalWin';
@@ -11,8 +10,13 @@ import { Button } from './Button';
 import InputAndDeleteCombo from './InputAndDeleteCombo';
 import ModalWinBackdropAndContainer from './ModalWinBackdropAndContainer';
 import { Subheading } from './Subheading';
-import { TextInput } from './TextInput';
 import { Title } from './Title';
+import { TextInputWithValidation } from './TextInputWithValidation';
+import ValidationMsg from './ValidationMsg';
+
+const TextInputWithValidationContainer = styled.div`
+  position: relative;
+`
 
 const ColumnsContainer = styled.div`
   display: flex;
@@ -28,10 +32,17 @@ const AddColumnButton = styled(Button)`
 const SubmitButton = styled(Button)`
   background-color: ${(props) => props.theme.colors.accent};
   color: ${(props) => props.theme.colors.buttonPrimaryText};
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.accentHover};
+  }
 `
 
 export default function AddOrEditBoardModal() {
   const dispatch = useDispatch();
+  // State for showing validation message
+  // - if Name text input is empty.
+  const [isValidInput, setIsValidInput] = useState(true);  
   const modalWinAction = useSelector((state: State) => state.modalWin);
   const board = modalWinAction.data as Board;
   const mode = modalWinAction.mode;
@@ -41,7 +52,9 @@ export default function AddOrEditBoardModal() {
       ...board,
       name: event.target.value
     };
+
     dispatchByMode(changedBoard);
+    setIsValidInput(true);
   }
 
   const addColumnClickHandler = () => {
@@ -68,12 +81,23 @@ export default function AddOrEditBoardModal() {
   }  
 
   const submitClickHandler = () => {
+    // Stop submission if Title text input is empty. 
+    if (board.name === '') {
+      setIsValidInput(false);
+      return;
+    }
+
+    const changedBoard = {
+      ...board,
+      columns: board.columns.filter((column) => column.name !== '')
+    }
+
     switch (mode) {
       case 'add':
-        dispatch(addBoardToBoards(board));
+        dispatch(addBoardToBoards(changedBoard));
         break;
       case 'edit':
-        dispatch(editBoardToBoards(board));
+        dispatch(editBoardToBoards(changedBoard));
         break;
     }
     dispatch(closeModalWin());
@@ -85,11 +109,17 @@ export default function AddOrEditBoardModal() {
         {mode === 'add' ? 'Add New' : 'Edit'} Board
       </Title>
       <Subheading>Board Name</Subheading>
-      <TextInput
-        className={jakartaSans.className}
-        onChange={nameInputHandler}
-        value={board.name}
-      />
+      <TextInputWithValidationContainer>
+        <TextInputWithValidation
+          className={jakartaSans.className}
+          onChange={nameInputHandler}
+          value={board.name}
+          placeholder={'e.g. Web Design'}
+          isValidInput={isValidInput}
+        />
+        {!isValidInput && <ValidationMsg/>}
+      </TextInputWithValidationContainer>
+
       <Subheading>Board Columns</Subheading>
       <ColumnsContainer>
         {board.columns.map((column) =>
@@ -110,7 +140,7 @@ export default function AddOrEditBoardModal() {
         className={jakartaSans.className}
         onClick={submitClickHandler}
       >
-        {mode === 'add' ? 'Create Task' : 'Save Changes'}
+        {mode === 'add' ? 'Create Board' : 'Save Changes'}
       </SubmitButton>
     </ModalWinBackdropAndContainer>
   );

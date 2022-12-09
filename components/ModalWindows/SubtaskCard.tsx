@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { jakartaSans } from "../../lib/fonts";
-import { Column, State, Subtask, Task, TaskAction } from "../../lib/types";
+import { State, Subtask, Task, TaskAction } from "../../lib/types";
 import checkIcon from '../../public/assets/icon-check.svg';
 import {editTask} from "../../redux/boards";
 import {viewTask} from "../../redux/modalWin";
@@ -11,7 +11,6 @@ import {viewTask} from "../../redux/modalWin";
 const SubtaskContainer = styled.li`
   border-radius: 0.25rem;
   background-color: ${(props) => props.theme.colors.secondary};
-  padding: 0.75rem;
   height: 2.5rem;
   display: flex;
   align-items: center;
@@ -20,15 +19,17 @@ const SubtaskContainer = styled.li`
 const SubtaskBtn = styled.button`
   background-color: ${(props) => props.theme.colors.secondary};
   border: none;
-  padding: 0;
+  padding: 0 0.75rem;
   display: flex;
   align-items: center;
-  height: 2rem;
-  width: 100%;
+  height: 2.5rem;
+  flex-grow: 1;
   gap: 1rem;
+  border-radius: 0.25rem;
 
   &:hover {
     cursor: pointer;
+    background-color: rgba(99, 95, 199, 0.25);
   }
 `
 

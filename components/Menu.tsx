@@ -3,12 +3,11 @@ import styled from "styled-components"
 export const Menu = styled.ul`
   height: 5.88rem;
   width: 12.0rem;
-  background-color: ${(props) => props.theme.colors.main};
+  background-color: ${(props) => props.theme.colors.menuOptHover};
   border-radius: 0.5rem;
-  padding: 1rem;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   position: absolute;
   box-shadow: ${(props) => props.theme.colors.shadow};
   margin-block-start: 0;

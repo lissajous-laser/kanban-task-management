@@ -14,8 +14,6 @@ const ButtonContainer = styled.div`
 `
 
 const Button = styled.button`
-  /* width: 17.5rem;
-  height: 70%; */
   width: 100%;
   height: 100%;
   background: ${(props) => props.theme.colors.addColumnBg};
@@ -23,13 +21,12 @@ const Button = styled.button`
   padding: 0;
   border: 0;
   border-radius: 0.38rem;
-  /* margin-left: 1.5rem; */
-  /* margin-top: 3.94rem; */
   font-size: 1.5rem;
   font-weight: 700;
 
   &:hover {
     cursor: pointer;
+    color: ${(props) => props.theme.colors.accent};   
   }
 `
 
@@ -40,6 +37,7 @@ export default function AddColumn() {
 
   const clickHandler = () => {
     if (boards.length > 0) {
+
       dispatch(editBoard(
         boards.filter((board) => board.id === currentBoardId)[0]
       ));
