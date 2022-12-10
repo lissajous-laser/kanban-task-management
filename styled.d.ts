@@ -24,7 +24,7 @@ declare module 'styled-components' {
       buttonPrimaryText: string,
       buttonSecondaryBg: string,
       shadow: string,
-      menuOptHover: string,
+      menuBg: string,
     }
   }
 }

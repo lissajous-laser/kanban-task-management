@@ -16,7 +16,6 @@ const Container = styled.button`
   border: 0;
   padding: 0;
 
-
   &:hover {
     cursor: pointer;
     background-color: ${(props) => props.theme.colors.accentHover};

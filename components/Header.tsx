@@ -7,7 +7,7 @@ import {State} from '../lib/types';
 import moreIcon from '../public/assets/icon-vertical-ellipsis.svg';
 import { toggleMenu } from '../redux/dropDownMenu';
 import {addTask, deleteBoard, editBoard} from '../redux/modalWin';
-import style from '../styles/Header.module.css';
+import { ButtonLg } from './ButtonLg';
 import { Menu } from './Menu';
 import { MenuOption } from './MenuOption';
 import { MoreButton } from './MoreButton';
@@ -37,37 +37,22 @@ const AddTaskAndMoreBtns = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 12.04rem;
-  /* gap: 1.5rem; */
   margin-right: 2.02rem;
 `
 
-const AddTaskBtn = styled.button`
+const AddTaskBtn = styled(ButtonLg)<{enabled: boolean}>`
   width: 10.25rem;
-  height: 3.0rem;
-  border: none;
-  border-radius: 1.5rem;
-  background-color: ${(props) => props.theme.colors.accent};
-  color: ${(props) => props.theme.colors.buttonPrimaryText};
-  font-size: 0.94rem;
-  font-weight: 700;
-  padding: 0;
+  background-color: ${
+    (props) => props.enabled 
+    ? (props) => props.theme.colors.accent
+    : (props) => props.theme.colors.accentFaded
+  };
 
   &:hover {
-    cursor: pointer;
-    background-color: ${(props) => props.theme.colors.accentHover};
-  }
-`
-
-const MoreBtn = styled.button`
-  border: none;
-  padding: 0;
-  background-color:  ${(props) => props.theme.colors.main};
-  width: 1rem;
-  display: grid;
-  place-items: center;
-
-  &:hover {
-    cursor: pointer;
+    background-color: ${
+      (props) => props.enabled 
+      ? (props) => props.theme.colors.accentHover
+      : (props) => props.theme.colors.accentFaded};
   }
 `
 
@@ -84,7 +69,6 @@ const DeleteBoardOption = styled(MenuOption)`
   color: ${(props) => props.theme.colors.danger};
 `
 
-
 export default function Header() {
   const dispatch = useDispatch();
   const currentBoardId = useSelector((state: State) => state.currentBoardId);
@@ -93,7 +77,7 @@ export default function Header() {
   const currentBoard = boards.filter((board) => board.id === currentBoardId)[0];
 
   const addTaskHandler = () => {
-    if (boards.length > 0) {
+    if (currentBoard && currentBoard.columns.length > 0) {
         const newTask = {
         id: Date.now(),
         title: '',
@@ -134,13 +118,13 @@ export default function Header() {
       <AddTaskAndMoreBtns>
         <AddTaskBtn
           className={jakartaSans.className}
-          onClick={addTaskHandler}        
+          onClick={addTaskHandler}
+          enabled={boards.length > 0 && currentBoard.columns.length > 0}
         >
           + Add New Task
         </AddTaskBtn>
         <MoreButton onClick={moreBtnClickHandler}>
           <Image
-            className={style.moreIcon}
             src={moreIcon}
             alt='Vertical ellipsis icon'
           />

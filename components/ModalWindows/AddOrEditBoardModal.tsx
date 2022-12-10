@@ -13,6 +13,7 @@ import { Subheading } from './Subheading';
 import { Title } from './Title';
 import { TextInputWithValidation } from './TextInputWithValidation';
 import ValidationMsg from './ValidationMsg';
+import { changeBoard } from '../../redux/currentBoardId';
 
 const TextInputWithValidationContainer = styled.div`
   position: relative;
@@ -72,6 +73,7 @@ export default function AddOrEditBoardModal() {
     switch (mode) {
       case 'add':
         dispatch(addBoard(changedBoard));
+        dispatch(changeBoard(board.id));
         break;
       case 'edit':
         dispatch(editBoard(changedBoard));

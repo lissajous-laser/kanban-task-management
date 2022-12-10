@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const Menu = styled.ul`
   height: 5.88rem;
   width: 12.0rem;
-  background-color: ${(props) => props.theme.colors.menuOptHover};
+  background-color: ${(props) => props.theme.colors.menuBg};
   border-radius: 0.5rem;
   padding: 1rem 0;
   display: flex;

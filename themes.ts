@@ -21,8 +21,7 @@ export const lightTheme: Theme = {
     buttonPrimaryText: 'rgb(255, 255, 255)',
     buttonSecondaryBg: 'rgba(99, 95, 199, 0.25)',
     shadow: '0 0.2rem 0.5rem rgba(130, 143, 163, 0.2)',
-    menuOptHover: 'rgb(255, 255, 255)',
-
+    menuBg: 'rgb(255, 255, 255)',
   }
 }
 
@@ -46,7 +45,7 @@ export const darkTheme: Theme = {
     buttonPrimaryText: 'rgb(255, 255, 255)',
     buttonSecondaryBg: 'rgb(255, 255, 255)',
     shadow: '0 0.2rem 0.5rem rgba(41, 124, 165, 0.06)',
-    menuOptHover: 'rgb(32, 33, 44)',
+    menuBg: 'rgb(32, 33, 44)',
   }
 }
 

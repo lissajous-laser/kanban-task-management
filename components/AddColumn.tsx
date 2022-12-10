@@ -34,13 +34,19 @@ export default function AddColumn() {
   const dispatch = useDispatch();
   const boards = useSelector((state: State) => state.boards);
   const currentBoardId = useSelector((state: State) => state.currentBoardId);
+  const currentBoard =
+    boards.filter((board) => board.id === currentBoardId)[0];
 
   const clickHandler = () => {
     if (boards.length > 0) {
 
-      dispatch(editBoard(
-        boards.filter((board) => board.id === currentBoardId)[0]
-      ));
+      dispatch(editBoard({
+        ...currentBoard,
+        columns: [
+          ...currentBoard.columns,
+          {id: Date.now(), name: '', tasks: []}
+        ]
+      }));
     }
   }
 

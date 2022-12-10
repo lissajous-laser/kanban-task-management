@@ -5,6 +5,7 @@ export const MoreButton = styled.button`
   padding: 0;
   background-color:  ${(props) => props.theme.colors.main};
   width: 1rem;
+  height: 1.5rem;
   display: grid;
   place-items: center;
   position: relative;
