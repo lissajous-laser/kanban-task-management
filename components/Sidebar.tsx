@@ -191,7 +191,7 @@ export default function Sidebar() {
           {sidebarVis &&
             <BoardsPanel>
               <BoardsListHead>
-                ALL BOARDS
+                ALL BOARDS ({boards.length})
               </BoardsListHead>
               <ListOfBoards>
                 {boards.map((board) => 

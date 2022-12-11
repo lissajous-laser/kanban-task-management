@@ -88,16 +88,21 @@ export default function DropDown({
   }
 
   const dropDownChangeHandler = 
-    (newValue: SingleValue<{value: number, label: string}>) => {
+    (newValue: unknown) => {
+      const castNewValue = newValue as {value: number, label: string}
+
       if (!setDropDownSelected && currentColumn !== undefined) {
         const taskAction: TaskAction = {
           boardId: currentBoardId,
-          columnSelected: newValue?.value,
+          columnSelected: castNewValue.value,
           task: task
         };
         dispatch(editTask(taskAction));
       } else if (setDropDownSelected && newValue) {
-        setDropDownSelected({value: newValue.value, label: newValue.label});
+        setDropDownSelected({
+          value: castNewValue.value,
+          label: castNewValue.label
+        });
       }
     }
 
