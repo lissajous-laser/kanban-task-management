@@ -9,20 +9,15 @@ import {editTask} from "../../redux/boards";
 import {viewTask} from "../../redux/modalWin";
 
 const SubtaskContainer = styled.li`
-  border-radius: 0.25rem;
-  background-color: ${(props) => props.theme.colors.secondary};
-  height: 2.5rem;
   display: flex;
-  align-items: center;
 `
 
 const SubtaskBtn = styled.button`
   background-color: ${(props) => props.theme.colors.secondary};
   border: none;
-  padding: 0 0.75rem;
+  padding: 0.75rem;
   display: flex;
   align-items: center;
-  height: 2.5rem;
   flex-grow: 1;
   gap: 1rem;
   border-radius: 0.25rem;
@@ -44,6 +39,7 @@ const CheckBox = styled.div<{isCompleted: boolean}>`
   };
   display: grid;
   place-items: center;
+  flex-shrink: 0;
 `
 
 const Title = styled.p<{isCompleted: boolean}>`
@@ -52,6 +48,7 @@ const Title = styled.p<{isCompleted: boolean}>`
   font-weight: 700;
   margin-top: 0;
   margin-bottom: 0;
+  text-align: left;
   text-decoration-line: ${(props) =>
     props.isCompleted
     ? 'line-through'

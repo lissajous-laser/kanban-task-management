@@ -1,4 +1,3 @@
-import { Ruge_Boogie } from "@next/font/google";
 import {Theme} from "styled-components";
 
 export const lightTheme: Theme = {

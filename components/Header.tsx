@@ -7,37 +7,56 @@ import {State} from '../lib/types';
 import moreIcon from '../public/assets/icon-vertical-ellipsis.svg';
 import { toggleMenu } from '../redux/dropDownMenu';
 import {addTask, deleteBoard, editBoard} from '../redux/modalWin';
+import { device } from '../styles/breakpoints';
 import { ButtonLg } from './ButtonLg';
 import { Menu } from './Menu';
 import { MenuOption } from './MenuOption';
 import { MoreButton } from './MoreButton';
 
 const Container = styled.header`
-  width: 100%;
+  width: calc(100vw - 18.75rem);
   height: 6.06rem;
   background-color: ${(props) => props.theme.colors.main};
   border-bottom: 0.06rem solid ${(props) => props.theme.colors.outline};
   display: flex;
   justify-content: space-between;
-  position: relative;
+  position: fixed;
+  left: 18.75rem;
+  top: 0;
+
+  @media only screen and (${device.md}) {
+    width: calc(100vw - 16.25rem);
+    height: 5.06rem;
+    left: 16.25rem;
+  }
 `
 
 const BoardHeading = styled.h2`
   font-size: 1.5rem;
+  height: 6.0rem;
   font-weight: 700;
   color: ${(props) => props.theme.colors.textPrimary};
-  margin-left: 1.50rem;
-  margin-top: 1.81rem;
+  padding-top: 1.81rem;
+  margin: 0 0 0 1.50rem; 
+
+  @media only screen and (${device.md}) {
+    font-size: 1.25rem;
+  }
 `
 
 const AddTaskAndMoreBtns = styled.div`
-  margin-top: 1.25rem;
-  margin-bottom: 1.75rem;
+  padding-bottom: 0.5rem;
+  height: 6.0rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 12.04rem;
   margin-right: 2.02rem;
+
+  @media only scree and (${device.md}) {
+    padding-bottom: 0;
+    height: 5rem;
+  }
 `
 
 const AddTaskBtn = styled(ButtonLg)<{enabled: boolean}>`
@@ -119,7 +138,7 @@ export default function Header() {
         <AddTaskBtn
           className={jakartaSans.className}
           onClick={addTaskHandler}
-          enabled={boards.length > 0 && currentBoard.columns.length > 0}
+          enabled={boards.length > 0 && currentBoard && currentBoard.columns.length > 0}
         >
           + Add New Task
         </AddTaskBtn>

@@ -16,17 +16,14 @@ import SidebarTab from '../components/SidebarTab';
 
 
 const Container = styled.div`
-  display: flex;
   width: 100wv;
   height: max(100vh);
   position: relative;
-`;
+`
 
 const Main = styled.div`
-  flex-grow: 1;
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  border: 2px solid blue;
 `
 
 export default function Home() {
@@ -57,11 +54,10 @@ export default function Home() {
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <ModalWinSwitch/>
         <Container onClick={containerClickHandler}>
-          {sidebarVis ? <Sidebar/> : <SidebarTab/>}
-          <Main>
+          <Sidebar/>
+          {sidebarVis || <SidebarTab/>}
             <Header/>
             <BoardView/>
-          </Main>
         </Container>
       </ThemeProvider>
     </div>

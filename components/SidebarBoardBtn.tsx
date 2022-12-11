@@ -35,8 +35,12 @@ const BoardBtn = styled(SidebarBtn)<{isCurrentBoard: boolean}>`
       : (props) => props.theme.colors.accent
     };
   }
+
 `
 
+const Name = styled.div`
+  font-size: 0.94rem;
+`
 
 export default function SidebarBoardBtn({board} : {board: Board}) {
   const currentBoard = useSelector((state: State) => state.currentBoardId);
@@ -58,7 +62,7 @@ export default function SidebarBoardBtn({board} : {board: Board}) {
         src={currentBoard === board.id ? boardIconWhite : boardIcon}
         alt='Kanban board icon'
       />
-      <div>{board.name}</div>
+      <Name>{board.name}</Name>
     </BoardBtn>
   );
 }

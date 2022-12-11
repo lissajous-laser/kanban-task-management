@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { jakartaSans } from "../lib/fonts";
 import { State } from "../lib/types";
 import { editBoard } from "../redux/modalWin";
+import { device } from "../styles/breakpoints";
 
 const ButtonContainer = styled.div`
   width: 17.5rem;
@@ -11,6 +12,7 @@ const ButtonContainer = styled.div`
   padding-top: 3.94rem;
   padding-left: 1.5rem;
   padding-bottom: 3.13rem;
+  flex-shrink: 0;
 `
 
 const Button = styled.button`
@@ -27,6 +29,10 @@ const Button = styled.button`
   &:hover {
     cursor: pointer;
     color: ${(props) => props.theme.colors.accent};   
+  }
+
+  @media only screen and (${device.md}) {
+    font-size: 1.25rem;
   }
 `
 

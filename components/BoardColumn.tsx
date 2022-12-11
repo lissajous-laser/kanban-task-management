@@ -7,6 +7,7 @@ const Container = styled.section`
   width: 17.5rem;
   margin-top: 1.56rem;
   margin-left: 1.5rem;
+  flex-shrink: 0;
 `
 
 const Title = styled.h3`

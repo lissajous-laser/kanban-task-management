@@ -13,15 +13,29 @@ import { Board, State } from "../lib/types";
 import SidebarBoardBtn from "./SidebarBoardBtn";
 import { useDispatch } from "react-redux";
 import { addBoard } from "../redux/modalWin";
-import { hideSidebar } from "../redux/sidebarVis";
+import sidebarVis, { hideSidebar } from "../redux/sidebarVis";
 import { toggleDarkMode } from "../redux/darkMode";
 import { SidebarBtn } from "./SidebarBtn";
+import { device } from "../styles/breakpoints";
 
-const Container = styled.nav`
-  width: 300px;
-  height: 100%;
+const Container = styled.nav<{sidebarVis: boolean}>`
+  width: 18.75rem;
+  height: ${(props) => props.sidebarVis ? '100%' : '6.06rem'};
   background-color: ${(props) => props.theme.colors.main};
   border-right: 0.06rem solid ${(props) => props.theme.colors.outline};
+  border-bottom: 
+    ${(props) => props.sidebarVis 
+    ? 'none'
+    : '0.06rem solid rgba(130, 143, 163, 0.25)'
+    };
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+
+  @media only screen and (${device.md}) {
+    width: 16.25rem;
+    height: ${(props) => props.sidebarVis ? '100%' : '5.06rem'};
+  }
 `;
 
 const Column = styled.div`
@@ -31,6 +45,15 @@ const Column = styled.div`
   height: 100%;
 `
 
+const Logo = styled(Image)`
+  margin-top: 2.05rem;
+  margin-left: 2.13rem;
+
+  @media only screen and (${device.md}) {
+    margin-left: 1.63rem;
+  }
+`
+
 const BoardsListHead = styled.div`
   color: ${(props) => props.theme.colors.textSecondary};
   font-size: 0.75rem;
@@ -38,6 +61,10 @@ const BoardsListHead = styled.div`
   font-weight: 700;
   margin-top: 3.38rem;
   margin-left: 2.0rem;
+
+  @media only screen and (${device.md}) {
+    margin-left: 1.5rem;
+  }
 `
 
 const BoardsPanel = styled.div`
@@ -62,16 +89,20 @@ const ListOfBoards = styled.ul`
 `
 
 const ThemePanel = styled.div`
-  width: 15.69rem;
+  width: calc(100% - 3.0rem);
   height: 3.0rem;
   background-color: ${(props) => props.theme.colors.secondary};
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1.48rem;
   border-radius: 0.38rem;
+
+  @media only screen and (${device.md}) {
+    width: calc(100% - 1.5rem);
+    margin: 0 0.75rem;
+  }  
 `
 
 const ThemeBtn = styled.button<{darkMode: boolean}>`
@@ -120,6 +151,7 @@ export default function Sidebar() {
   const dispatch = useDispatch();
   const boards: Board[] = useSelector((state: State) => state.boards);
   const darkMode = useSelector((state: State) => state.darkMode);
+  const sidebarVis = useSelector((state: State) => state.sidebarVis);
 
   const newBoardClickHandler = () => {
     const baseId = Date.now();
@@ -145,60 +177,66 @@ export default function Sidebar() {
   }
 
   return (
-    <Container className={jakartaSans.className}>
+    <Container
+      sidebarVis={sidebarVis}
+      className={jakartaSans.className}
+    >
       <Column>
         <div>
-          <Image
+          <Logo
             className={style.logo}
             src={darkMode ? logoDark :  logoLight}
             alt='logo'
           />
-          <BoardsPanel>
-            <BoardsListHead>
-              ALL BOARDS
-            </BoardsListHead>
-            <ListOfBoards>
-              {boards.map((board) => 
-                <SidebarBoardBtn key={board.id} board={board}/>
-              )}
-            </ListOfBoards>
-            <NewBoardBtn 
-              onClick={newBoardClickHandler} 
+          {sidebarVis &&
+            <BoardsPanel>
+              <BoardsListHead>
+                ALL BOARDS
+              </BoardsListHead>
+              <ListOfBoards>
+                {boards.map((board) => 
+                  <SidebarBoardBtn key={board.id} board={board}/>
+                )}
+              </ListOfBoards>
+              <NewBoardBtn 
+                onClick={newBoardClickHandler} 
+                className={jakartaSans.className}
+              >
+                <Image
+                  className={style.boardIcon}
+                  src={boardIcon}
+                  alt='Kanban board icon'
+                />
+                <div>+ Create New Board</div>
+              </NewBoardBtn>
+            </BoardsPanel>
+          }
+        </div>
+        {sidebarVis &&
+          <div>
+            <ThemePanel>
+              <Image src={sun} alt='Sun icon'/>
+              <ThemeBtn
+                onClick={darkModeClickHandler}
+                darkMode={darkMode}
+              >
+                <ToggleLever/>
+              </ThemeBtn>
+              <Image src={moon} alt='Moon icon'/>
+            </ThemePanel>   
+            <HideSidebarBtn
+              onClick={hideSidebarClickHandler}
               className={jakartaSans.className}
             >
-              <Image
-                className={style.boardIcon}
-                src={boardIcon}
-                alt='Kanban board icon'
+              <Image 
+                className={style.hideSidebarIcon} 
+                src={hideSidebarIcon} 
+                alt='Hide sidebar icon'
               />
-              <div>+ Create New Board</div>
-            </NewBoardBtn>
-
-          </BoardsPanel>
-        </div>
-        <div>
-          <ThemePanel>
-            <Image src={sun} alt='Sun icon'/>
-            <ThemeBtn
-              onClick={darkModeClickHandler}
-              darkMode={darkMode}
-            >
-              <ToggleLever/>
-            </ThemeBtn>
-            <Image src={moon} alt='Moon icon'/>
-          </ThemePanel>   
-          <HideSidebarBtn
-            onClick={hideSidebarClickHandler}
-            className={jakartaSans.className}
-          >
-            <Image 
-              className={style.hideSidebarIcon} 
-              src={hideSidebarIcon} 
-              alt='Hide sidebar icon'
-            />
-            <div>Hide Sidebar</div>
-          </HideSidebarBtn>
-        </div>
+              <div>Hide Sidebar</div>
+            </HideSidebarBtn>
+          </div>
+        }
       </Column>
     </Container>
   );

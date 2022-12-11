@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from '../styles/breakpoints';
 
 export const SidebarBtn = styled.button`
   border: none;
@@ -10,5 +11,9 @@ export const SidebarBtn = styled.button`
   height: 3.0rem;
   width: 17.25rem;
   border-radius: 0 1.5rem 1.5rem 0;
-  
+
+  @media only screen and (${device.md}) {
+    padding-left: 1.5rem;
+    width: 15rem;
+  }
 `

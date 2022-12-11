@@ -21,7 +21,7 @@ const StyledSelect = styled(Select)`
   }
   & .Select__control {
     border: 1px solid ${(props) => props.theme.colors.controlOutline};
-    background-color: ${(props) => props.theme.colors.secondary};
+    background-color: ${(props) => props.theme.colors.main};
     height: 2.5rem;
 
     &:hover {
@@ -34,14 +34,14 @@ const StyledSelect = styled(Select)`
   & .Select__option {
     padding-left: 1.0rem;
     color: ${(props) => props.theme.colors.textSecondary};
-    background-color: ${(props) => props.theme.colors.secondary};
+    background-color: ${(props) => props.theme.colors.main};
     font-size: 0.81rem;
     &:hover {
       background-color: ${(props) => props.theme.colors.accentFaded};
     }
   }
   & .Select__menu {
-    background-color: ${(props) => props.theme.colors.secondary};
+    background-color: ${(props) => props.theme.colors.main};
   }
 `
 
