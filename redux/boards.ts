@@ -1,5 +1,5 @@
-import {bindActionCreators, createSlice, PayloadAction, Reducer} from '@reduxjs/toolkit';
-import {Board, Column, Task, TaskAction} from '../lib/types';
+import {createSlice, PayloadAction, Reducer} from '@reduxjs/toolkit';
+import {Board, TaskAction} from '../lib/types';
 import data from '../public/data.json'
 
 // Starting number for serial id in sample data.

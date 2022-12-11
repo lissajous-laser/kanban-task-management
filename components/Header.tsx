@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {jakartaSans} from '../lib/fonts';
@@ -94,6 +94,9 @@ export default function Header() {
   const boards = useSelector((state: State) => state.boards);
   const dropDownMenu = useSelector((state: State) => state.dropDownMenu);
   const currentBoard = boards.filter((board) => board.id === currentBoardId)[0];
+
+
+
 
   const addTaskHandler = () => {
     if (currentBoard && currentBoard.columns.length > 0) {

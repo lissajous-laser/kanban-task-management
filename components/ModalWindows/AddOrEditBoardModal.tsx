@@ -73,7 +73,6 @@ export default function AddOrEditBoardModal() {
     switch (mode) {
       case 'add':
         dispatch(addBoard(changedBoard));
-        dispatch(changeBoard(board.id));
         break;
       case 'edit':
         dispatch(editBoard(changedBoard));
@@ -97,6 +96,7 @@ export default function AddOrEditBoardModal() {
     switch (mode) {
       case 'add':
         dispatch(addBoardToBoards(changedBoard));
+        dispatch(changeBoard(board.id));
         break;
       case 'edit':
         dispatch(editBoardToBoards(changedBoard));

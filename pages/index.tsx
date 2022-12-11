@@ -8,13 +8,11 @@ import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import { State } from '../lib/types';
 import {importBoards} from '../redux/boards';
-// import styles from '../styles/Home.module.css';
 import {lightTheme, darkTheme} from '../themes';
 import ModalWinSwitch from '../components/ModalWindows/ModalWinSwitch';
 import { closeMenu } from '../redux/dropDownMenu';
-import SidebarTab from '../components/SidebarTab';
-
-
+import SidebarTab from '../components/SidebarTab'
+import { setDarkMode } from '../redux/darkMode';
 const Container = styled.div`
   width: 100wv;
   height: max(100vh);
@@ -30,15 +28,35 @@ export default function Home() {
   const dispatch = useDispatch();
   const sidebarVis = useSelector((state: State) => state.sidebarVis);
   const darkMode = useSelector((state: State) => state.darkMode);
+  const boards = useSelector((state: State) => state.boards)
   
-  // Loads saved data if there is any.
+  // Loads saved data into applicaction state if there is any.
   useEffect(() => {
-    const savedData = localStorage.getItem('boards');
+    const savedBoards = localStorage.getItem('boards');
+    const savedDarkMode = localStorage.getItem('darkMode');
 
-    if (savedData) {
-      dispatch(importBoards(JSON.parse(savedData)));
+    if (savedBoards && savedDarkMode) {
+      dispatch(importBoards(JSON.parse(savedBoards)));
+      dispatch(setDarkMode(JSON.parse(savedDarkMode)[0]));
     }
-  });
+  }, []);
+
+  // Saves to localStorage each time boards updates.
+  useEffect(() => {
+    // Timout required, otherwise default initial state
+    // overwrites data in localStorage before it is retrieved. 
+    setTimeout(() => {
+      localStorage.setItem('boards', JSON.stringify(boards));
+    }, 500);
+    console.log('saved');
+  }, [boards]);
+
+  useEffect (() => {
+    setTimeout(() => {
+      localStorage.setItem('darkMode', JSON.stringify([darkMode]));
+    })
+  }, [darkMode]);
+
 
   const containerClickHandler = () => {
     dispatch(closeMenu());
