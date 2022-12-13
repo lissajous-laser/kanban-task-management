@@ -12,7 +12,7 @@ export const SidebarBtn = styled.button`
   width: 17.25rem;
   border-radius: 0 1.5rem 1.5rem 0;
 
-  @media only screen and (${device.md}) {
+  @media screen and (${device.md}) {
     padding-left: 1.5rem;
     width: 15rem;
   }

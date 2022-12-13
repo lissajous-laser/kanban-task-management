@@ -10,7 +10,7 @@ const Container = styled.section`
   flex-shrink: 0;
 `
 
-const Title = styled.h3`
+const Title = styled.h2`
   color: ${(props) => props.theme.colors.textSecondary};
   font-size: 0.75rem;
   font-weight: 700;
@@ -27,6 +27,7 @@ const ColorCircle = styled.div<{idx: number}>`
   border-radius: 9999rem;
   background-color: ${(props) =>
     colorMarkers[props.idx % colorMarkers.length]};
+  flex-shrink: 0;
 `
 
 const Header = styled.div`

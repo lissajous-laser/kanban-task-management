@@ -2,7 +2,8 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import eye from '../public/assets/icon-show-sidebar.svg';
-import { hideSidebar, showSidebar } from "../redux/sidebarVis";
+import { showSidebar } from "../redux/sidebarVis";
+import { device } from "../styles/breakpoints";
 
 
 const Container = styled.button`
@@ -19,6 +20,10 @@ const Container = styled.button`
   &:hover {
     cursor: pointer;
     background-color: ${(props) => props.theme.colors.accentHover};
+  }
+
+  @media screen and (${device.sm}) {
+    display: none;
   }
 `
 

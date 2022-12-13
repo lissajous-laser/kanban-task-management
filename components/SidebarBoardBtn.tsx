@@ -11,6 +11,10 @@ import { jakartaSans } from '../lib/fonts';
 import { SidebarBtn } from './SidebarBtn';
 
 const BoardBtn = styled(SidebarBtn)<{isCurrentBoard: boolean}>`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
   background-color:  ${(props) =>
     props.isCurrentBoard
     ? (props) => props.theme.colors.accent
@@ -40,6 +44,11 @@ const BoardBtn = styled(SidebarBtn)<{isCurrentBoard: boolean}>`
 
 const Name = styled.div`
   font-size: 0.94rem;
+  padding-right: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 `
 
 export default function SidebarBoardBtn({board} : {board: Board}) {
@@ -52,17 +61,19 @@ export default function SidebarBoardBtn({board} : {board: Board}) {
   }
 
   return (
-    <BoardBtn
-      isCurrentBoard={currentBoard === board.id}
-      onClick={clickHandler}
-      className={jakartaSans.className}
-    >
-      <Image
-        className={style.boardIcon}
-        src={currentBoard === board.id ? boardIconWhite : boardIcon}
-        alt='Kanban board icon'
-      />
-      <Name>{board.name}</Name>
-    </BoardBtn>
+    <li>
+      <BoardBtn
+        isCurrentBoard={currentBoard === board.id}
+        onClick={clickHandler}
+        className={jakartaSans.className}
+      >
+        <Image
+          className={style.boardIcon}
+          src={currentBoard === board.id ? boardIconWhite : boardIcon}
+          alt='Kanban board icon'
+        />
+        <Name>{board.name}</Name>
+      </BoardBtn>
+    </li>
   );
 }

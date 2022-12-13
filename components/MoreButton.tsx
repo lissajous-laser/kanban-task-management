@@ -2,14 +2,11 @@ import styled from "styled-components";
 
 export const MoreButton = styled.button`
   border: none;
-  padding: 0;
+  padding: 0 0.5rem;
   background-color:  ${(props) => props.theme.colors.main};
-  width: 1rem;
   height: 1.5rem;
   display: grid;
   place-items: center;
-  position: relative;
-  left: 0.34rem;
 
   &:hover {
     cursor: pointer;

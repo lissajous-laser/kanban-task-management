@@ -28,7 +28,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const sidebarVis = useSelector((state: State) => state.sidebarVis);
   const darkMode = useSelector((state: State) => state.darkMode);
-  const boards = useSelector((state: State) => state.boards)
+  const boards = useSelector((state: State) => state.boards);
   
   // Loads saved data into applicaction state if there is any.
   useLayoutEffect(() => {

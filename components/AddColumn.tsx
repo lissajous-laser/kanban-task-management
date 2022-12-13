@@ -31,7 +31,7 @@ const Button = styled.button`
     color: ${(props) => props.theme.colors.accent};   
   }
 
-  @media only screen and (${device.md}) {
+  @media screen and (${device.md}) {
     font-size: 1.25rem;
   }
 `

@@ -26,6 +26,11 @@ const Container = styled.main<{isPopulated: boolean, sidebarVis: boolean}>`
     margin-left: ${(props) => props.sidebarVis ? '16.25rem' : '0'};
     padding-top: 5.06rem;
   }
+
+  @media screen and (${device.sm}) {
+    margin-left: 0;
+    padding-top: 4.0rem;
+  }
 `
 
 const AddColumnPrompt = styled.p`

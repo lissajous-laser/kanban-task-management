@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Title = styled.h4`
+export const Title = styled.h3`
   color: ${(props) => props.theme.colors.textPrimary};
   margin-top: 0;
   margin-bottom: 0;

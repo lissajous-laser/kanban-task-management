@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Subheading = styled.h5`
+export const Subheading = styled.h4`
   color: ${(props) => props.theme.colors.textSecondary};
   font-size: 0.75rem;
   font-weight: 700;

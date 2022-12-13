@@ -1,17 +1,9 @@
 import {useDispatch} from 'react-redux';
-import {closeModalWin} from '../../redux/modalWin';
 import styled from 'styled-components';
 import React, {Dispatch, ReactNode, SetStateAction} from 'react';
 import { jakartaSans } from '../../lib/fonts';
-
-
-const Backdrop = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-`
+import ShadedBackdrop from '../ShadedBackdrop';
+import { closeModalWin } from '../../redux/modalWin';
 
 const Container = styled.div`
   width: 30rem;
@@ -45,14 +37,13 @@ export default function ModalWinBackdropAndContainer({
     e.stopPropagation();
   }
 
-
   return(
-    <Backdrop onClick={() => dispatch(closeModalWin())}>
+    <ShadedBackdrop onClick={() => dispatch(closeModalWin())}>
       <Container onClick={onClickHandler}>
         <Content className={jakartaSans.className}>
           {children}
         </Content>
       </Container>
-    </Backdrop>
+    </ShadedBackdrop>
   );
 }

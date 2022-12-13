@@ -19,7 +19,7 @@ const Container = styled.li`
   }
 `
 
-const Title = styled.h4`
+const Title = styled.h3`
 
   font-size: 0.94rem;
   font-weight: 700;
@@ -27,7 +27,7 @@ const Title = styled.h4`
   margin-bottom: 0;
 `
 
-const Progess = styled.h5`
+const Progess = styled.h4`
   color: ${(props) => props.theme.colors.textSecondary};
   font-size: 0.75rem;
   font-weight: 700;
