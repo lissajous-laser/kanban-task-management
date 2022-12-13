@@ -47,5 +47,3 @@ export const darkTheme: Theme = {
     menuBg: 'rgb(32, 33, 44)',
   }
 }
-
-// shadow: '0 0.2rem 0.5rem rgba(49, 131, 153, 0.06)',

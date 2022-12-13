@@ -13,15 +13,11 @@ import ModalWinSwitch from '../components/ModalWindows/ModalWinSwitch';
 import { closeMenu } from '../redux/dropDownMenu';
 import SidebarTab from '../components/SidebarTab'
 import { setDarkMode } from '../redux/darkMode';
+
 const Container = styled.div`
   width: 100wv;
   height: max(100vh);
   position: relative;
-`
-
-const Main = styled.div`
-  height: 100%;
-  border: 2px solid blue;
 `
 
 export default function Home() {

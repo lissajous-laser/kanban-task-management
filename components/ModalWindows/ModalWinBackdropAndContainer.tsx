@@ -14,6 +14,13 @@ const Container = styled.div`
   transform: translate(-50%, -50%);
   border-radius: 0.38rem;
   background-color: ${(props) => props.theme.colors.main};
+
+  @media screen and (${device.sm}) {
+    position: static;
+    transform: translate(0, 0);
+    margin: 2.5rem auto;
+    padding: 1rem 0;
+  }
 `
 
 const Content = styled.section`
