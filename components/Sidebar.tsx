@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { Board, State } from "../lib/types";
 import SidebarBoardBtn from "./SidebarBoardBtn";
 import { useDispatch } from "react-redux";
-import { addBoard } from "../redux/modalWin";
+import { addBoard} from "../redux/modalWin";
 import { hideSidebar } from "../redux/sidebarVis";
 import { toggleDarkMode } from "../redux/darkMode";
 import { SidebarBtn } from "./SidebarBtn";
@@ -216,6 +216,10 @@ export default function Sidebar() {
       ]
     }
     dispatch(addBoard(newBoard));
+
+    if (window.innerWidth <= size.smNum) {
+      dispatch(hideSidebar());
+    }
   }
 
   const darkModeClickHandler = () => {
@@ -298,8 +302,6 @@ export default function Sidebar() {
           }
         </Column>
       </Container>
-
-
     </ShadedBackdrop>
   );
 }

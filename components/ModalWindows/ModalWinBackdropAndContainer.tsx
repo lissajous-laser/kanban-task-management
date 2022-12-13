@@ -4,9 +4,10 @@ import React, {Dispatch, ReactNode, SetStateAction} from 'react';
 import { jakartaSans } from '../../lib/fonts';
 import ShadedBackdrop from '../ShadedBackdrop';
 import { closeModalWin } from '../../redux/modalWin';
+import { device } from '../../styles/breakpoints';
 
 const Container = styled.div`
-  width: 30rem;
+  width: min(30rem, 91.47%);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -18,6 +19,11 @@ const Container = styled.div`
 const Content = styled.section`
   width: 25.98rem;
   margin: 2.0rem auto;
+  
+  @media screen and (${device.sm}) {
+    width: 86%;
+    margin: 1.5rem auto;
+  }
 `
 
 

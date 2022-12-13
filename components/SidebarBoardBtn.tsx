@@ -9,6 +9,8 @@ import { changeBoard } from '../redux/currentBoardId';
 import style from '../styles/Sidebar.module.css';
 import { jakartaSans } from '../lib/fonts';
 import { SidebarBtn } from './SidebarBtn';
+import { size } from '../styles/breakpoints';
+import { hideSidebar } from '../redux/sidebarVis';
 
 const BoardBtn = styled(SidebarBtn)<{isCurrentBoard: boolean}>`
   white-space: nowrap;
@@ -58,6 +60,9 @@ export default function SidebarBoardBtn({board} : {board: Board}) {
   const clickHandler = () => {
     dispatch(changeBoard(board.id));
 
+    if (window.innerWidth <= size.smNum) {
+      dispatch(hideSidebar());
+    }
   }
 
   return (

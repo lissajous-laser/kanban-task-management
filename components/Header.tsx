@@ -264,7 +264,7 @@ export default function Header() {
             {currentBoard ? currentBoard.name : ''}
           </BoardHeadingAsBtnTxt>
           <Image
-            src={downArrow}
+            src={sidebarVis ? upArrow : downArrow}
             alt='Show sidebar icon'
           />
         </ShowSidebarBtn>

@@ -107,7 +107,9 @@ export default function ConfirmDeleteModal() {
 
   return (
     <ModalWinBackdropAndContainer>
-      <DeleteTitle>Delete this Task?</DeleteTitle>
+      <DeleteTitle>
+        Delete this {'subtasks' in modalWinAction.data ? 'Task' : 'Board'}?
+      </DeleteTitle>
       <Text>
         {message()}
       </Text>

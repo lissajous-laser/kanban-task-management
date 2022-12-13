@@ -18,7 +18,7 @@ const TextInputAndCloseBtn = styled.div`
 `
 
 const SubtaskInputWrapper = styled.div`
-  width: 24.06rem;
+  width: calc(100% - 1.93rem);
 `
 
 const DeleteSubtaskBtn = styled.button`
